@@ -19,7 +19,7 @@ const HeaderComponent = () => {
               to={"/"}
               className={({ isActive }) =>
                 isActive
-                  ? "nav-link px-2 text-uppercase active"
+                  ? "nav-link px-2 text-uppercase active-link"
                   : "nav-link px-2 text-uppercase"
               }
             >
@@ -31,7 +31,7 @@ const HeaderComponent = () => {
               to={"/offres"}
               className={({ isActive }) =>
                 isActive
-                  ? "nav-link px-2 text-uppercase active"
+                  ? "nav-link px-2 text-uppercase active-link"
                   : "nav-link px-2 text-uppercase"
               }
             >
@@ -43,7 +43,7 @@ const HeaderComponent = () => {
               to={"/actualites"}
               className={({ isActive }) =>
                 isActive
-                  ? "nav-link px-2 text-uppercase active"
+                  ? "nav-link px-2 text-uppercase active-link"
                   : "nav-link px-2 text-uppercase"
               }
             >
@@ -55,7 +55,7 @@ const HeaderComponent = () => {
               to={"/forum"}
               className={({ isActive }) =>
                 isActive
-                  ? "nav-link px-2 text-uppercase active"
+                  ? "nav-link px-2 text-uppercase active-link"
                   : "nav-link px-2 text-uppercase"
               }
             >
@@ -67,7 +67,7 @@ const HeaderComponent = () => {
               to={"/ressources-conseils"}
               className={({ isActive }) =>
                 isActive
-                  ? "nav-link px-2 text-uppercase active"
+                  ? "nav-link px-2 text-uppercase active-link"
                   : "nav-link px-2 text-uppercase"
               }
             >
@@ -79,7 +79,7 @@ const HeaderComponent = () => {
               to={"/ressources-conseils"}
               className={({ isActive }) =>
                 isActive
-                  ? "nav-link px-2 text-uppercase active"
+                  ? "nav-link px-2 text-uppercase active-link"
                   : "nav-link px-2 text-uppercase"
               }
             >
@@ -88,13 +88,15 @@ const HeaderComponent = () => {
           </li>
         </ul>
 
-        <div className="col-md-3 text-end">
-          <button
-            type="button"
-            className="btn btn-secondary fw-bold text-uppercase"
-          >
-            Connexion
-          </button>
+        <div className="col-md-2 text-end">
+          <NavLink to="dashboard">
+            <button
+              className="btn btn-secondary fw-bold text-uppercase"
+              type="button"
+            >
+              Connexion
+            </button>
+          </NavLink>
         </div>
       </header>
     </div>
