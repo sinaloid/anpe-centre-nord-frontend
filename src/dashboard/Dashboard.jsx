@@ -2,6 +2,8 @@ import { useState } from "react";
 import { IconSvg } from "./components/IconSvg";
 import "./dashboard.css";
 import { NavLink } from "react-router-dom";
+import { BarChart } from "../components/chart/BarChart";
+import { LineChart } from "../components/chart/LineChart";
 
 const Dashboard = () => {
   const [viewSearch, setViewSearch] = useState(false);
@@ -131,7 +133,7 @@ const Dashboard = () => {
               aria-expanded="false"
               aria-label="Toggle navigation"
             >
-              <svg className="bi">
+              <svg className="bi bi-dash">
                 <use xlinkHref="#list" />
               </svg>
             </button>
@@ -177,7 +179,7 @@ const Dashboard = () => {
                     href="#"
                     aria-label="Add a new report"
                   >
-                    <svg className="bi">
+                    <svg className="bi bi-dash">
                       <use xlinkHref="#grid-fill" />
                     </svg>
                   </a>
@@ -188,7 +190,7 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2 active"
                       to="#"
                     >
-                      <svg className="bi">
+                      <svg className="bi bi-dash">
                         <use xlinkHref="#house-fill" />
                       </svg>
                       Accueil
@@ -204,8 +206,8 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="emplois"
                     >
-                      <svg className="bi">
-                        <use xlinkHref="#file-earmark" />
+                      <svg className="bi bi-dash">
+                        <use xlinkHref="#briefcase" />
                       </svg>
                       Emplois
                     </NavLink>
@@ -215,8 +217,8 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="stages"
                     >
-                      <svg className="bi">
-                        <use xlinkHref="#cart" />
+                      <svg className="bi bi-dash">
+                        <use xlinkHref="#diamond" />
                       </svg>
                       Stages
                     </NavLink>
@@ -226,8 +228,8 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="formations"
                     >
-                      <svg className="bi">
-                        <use xlinkHref="#people" />
+                      <svg className="bi bi-dash">
+                        <use xlinkHref="#mortarboard" />
                       </svg>
                       Formations
                     </NavLink>
@@ -237,8 +239,8 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="projets"
                     >
-                      <svg className="bi">
-                        <use xlinkHref="#graph-up" />
+                      <svg className="bi bi-dash">
+                        <use xlinkHref="#layers" />
                       </svg>
                       Projets
                     </NavLink>
@@ -253,7 +255,7 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="actualites"
                     >
-                      <svg className="bi">
+                      <svg className="bi bi-dash">
                         <use xlinkHref="#puzzle" />
                       </svg>
                       Actualites
@@ -264,14 +266,14 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="forum"
                     >
-                      <svg className="bi">
+                      <svg className="bi bi-dash">
                         <use xlinkHref="#puzzle" />
                       </svg>
                       Forum
                     </NavLink>
                   </li>
                 </ul>
-                
+
                 <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-body-secondary text-uppercase">
                   <span>Gestion</span>
                   <a
@@ -279,7 +281,7 @@ const Dashboard = () => {
                     href="#"
                     aria-label="Add a new report"
                   >
-                    <svg className="bi">
+                    <svg className="bi bi-dash">
                       <use xlinkHref="#plus-circle" />
                     </svg>
                   </a>
@@ -290,7 +292,7 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       href="#"
                     >
-                      <svg className="bi">
+                      <svg className="bi bi-dash">
                         <use xlinkHref="#file-earmark-text" />
                       </svg>
                       Messages
@@ -301,7 +303,7 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       href="#"
                     >
-                      <svg className="bi">
+                      <svg className="bi bi-dash">
                         <use xlinkHref="#file-earmark-text" />
                       </svg>
                       Candidatures
@@ -317,10 +319,10 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="candidats"
                     >
-                      <svg className="bi">
-                        <use xlinkHref="#file-earmark-text" />
+                      <svg className="bi bi-dash">
+                        <use xlinkHref="#people" />
                       </svg>
-                      Candidats
+                      Postulants
                     </NavLink>
                   </li>
                   <li className="nav-item">
@@ -328,8 +330,8 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="recruteurs"
                     >
-                      <svg className="bi">
-                        <use xlinkHref="#file-earmark-text" />
+                      <svg className="bi bi-dash">
+                        <use xlinkHref="#people" />
                       </svg>
                       Recruteurs
                     </NavLink>
@@ -339,8 +341,8 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       to="recruteurs"
                     >
-                      <svg className="bi">
-                        <use xlinkHref="#file-earmark-text" />
+                      <svg className="bi bi-dash">
+                        <use xlinkHref="#people" />
                       </svg>
                       Administrateurs
                     </NavLink>
@@ -355,7 +357,7 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       href="#"
                     >
-                      <svg className="bi">
+                      <svg className="bi bi-dash">
                         <use xlinkHref="#gear-wide-connected" />
                       </svg>
                       Paramètres
@@ -366,7 +368,7 @@ const Dashboard = () => {
                       className="nav-link d-flex align-items-center gap-2"
                       href="#"
                     >
-                      <svg className="bi">
+                      <svg className="bi bi-dash">
                         <use xlinkHref="#door-closed" />
                       </svg>
                       Déconnection
@@ -378,79 +380,20 @@ const Dashboard = () => {
           </div>
 
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-body-tertiary">
-            <div className="sticky-top pt-4">
-              <div className="card rounded-3 border shadow-sm py-2 px-3">
-                <div className="d-flex align-items-center">
-                  {viewSearch && (
-                    <>
-                      <div className="input-group">
-                        <span className="input-group-text" id="basic-addon1">
-                          @
-                        </span>
-                        <input
-                          type="text"
-                          className="form-control"
-                          placeholder="Username"
-                          aria-label="Username"
-                          aria-describedby="basic-addon1"
-                        />
-                      </div>
-                    </>
-                  )}
-                  {!viewSearch && (
-                    <>
-                      <div className="ms-2 me-auto" value={"viewSearch"}>
-                        <span
-                          className="icon-26 text-muted"
-                          value={"viewSearch"}
-                        >
-                          <i className="bi bi-search"></i>
-                        </span>
-                        <span
-                          className="d-inline-block ms-3 text-muted"
-                          data-value={"viewSearch"}
-                        >
-                          Rechercher ...
-                        </span>
-                      </div>
-
-                      <div className="ms-4">
-                        <span className="icon-26">
-                          <i className="bi bi-chat"></i>
-                        </span>
-                      </div>
-                      <div className="mx-3">
-                        <span className="icon-26">
-                          <i className="bi bi-bell"></i>
-                        </span>
-                      </div>
-                      <div className="mx-">
-                        <img
-                          className="rounded-circle"
-                          width={"38px"}
-                          height={"38px"}
-                          src="https://source.unsplash.com/random/800×800/?profile"
-                          alt=""
-                        />
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
+            
             <div className="d-flex mt-4 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom1">
               <h1 className="h2">Dashboard</h1>
               <div className="btn-toolbar mb-2 mb-md-0">
                 <div className="btn-group me-2">
                   <button
                     type="button"
-                    className="btn btn-sm btn-outline-secondary"
+                    className="btn btn-sm btn-outline-primary"
                   >
                     Share
                   </button>
                   <button
                     type="button"
-                    className="btn btn-sm btn-outline-secondary"
+                    className="btn btn-sm btn-outline-primary"
                   >
                     Export
                   </button>
@@ -459,7 +402,7 @@ const Dashboard = () => {
                   type="button"
                   className="btn btn-sm btn-outline-primary dropdown-toggle d-flex align-items-center gap-1"
                 >
-                  <svg className="bi">
+                  <svg className="bi bi-dash">
                     <use xlinkHref="#calendar3" />
                   </svg>
                   This week
@@ -467,18 +410,24 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="card p-4 shadow-sm mb-3 border-0">
+            <div className="mb-3">
               <div className="row row-cols-1 row-cols-md-4">
                 {[...Array(4).keys()].map((data, idx) => {
                   return (
-                    <div className="col border-end" key={idx}>
-                      <div className="d-flex">
-                        <div>
-                          <span>Lorem ipsum</span>
-                          <div className="fw-bold">185000</div>
-                          <span className="text-muted">Lorem ipsum</span>
+                    <div className="col mb-3" key={idx}>
+                      <div className="card">
+                        <div className="d-flex p-4">
+                          <div>
+                            <span>Lorem ipsum</span>
+                            <div className="fw-bold">185000</div>
+                            <span className="text-muted">Lorem ipsum</span>
+                          </div>
+                          <div className="ms-auto">
+                            <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                              <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                            </span>
+                          </div>
                         </div>
-                        <div className="ms-auto">icon</div>
                       </div>
                     </div>
                   );
@@ -486,7 +435,20 @@ const Dashboard = () => {
               </div>
             </div>
 
-            <div className="card p-4 border-0 shadow-sm">
+            <div className="row row-cols-1 row-cols-md-2 mb-3">
+              <div className="col mb-3">
+                <div className="card">
+                  <BarChart />
+                </div>
+              </div>
+              <div className="col mb-3">
+                <div className="card">
+                  <LineChart />
+                </div>
+              </div>
+            </div>
+
+            <div className="card p-4">
               <div className="table-responsive small">
                 <div className="d-flex mb-3">
                   <div className="me-auto">
@@ -521,15 +483,17 @@ const Dashboard = () => {
                           <td>data</td>
                           <td>placeholder</td>
                           <td className="text-center">
-                            <span className="btn btn-outline-primary me-1">
-                              <i className="bi bi-eye-fill"></i>
-                            </span>
-                            <span className="btn btn-outline-danger mx-1">
-                              <i className="bi bi-pencil-square"></i>
-                            </span>
-                            <span className="btn btn-danger ms-1">
-                              <i className="bi bi-trash-fill"></i>
-                            </span>
+                            <div className="btn-group">
+                              <button className="btn btn-outline-primary rounded-2 me-1">
+                                <i className="bi bi-eye-fill"></i>
+                              </button>
+                              <button className="btn btn-outline-danger rounded-2 mx-1">
+                                <i className="bi bi-pencil-square"></i>
+                              </button>
+                              <button className="btn btn-danger rounded-2 ms-1">
+                                <i className="bi bi-trash-fill"></i>
+                              </button>
+                            </div>
                           </td>
                         </tr>
                       );
