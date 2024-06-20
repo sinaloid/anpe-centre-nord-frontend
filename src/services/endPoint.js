@@ -5,8 +5,8 @@ const endPoint = {
     verifyOtp:"verify-otp",
     editPassword:"edit-password",
     Verify2Fa:"verify-2fa",
-
-    classes:"classes",
+    offres:"offres",
+    
     matieres:"matieres",
     periodes:"periodes",
     chapitres:"chapitres",

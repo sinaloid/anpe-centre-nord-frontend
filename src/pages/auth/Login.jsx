@@ -76,9 +76,13 @@ const Login = () => {
       error: {
         render({ data }) {
           console.log(data);
-          return data.response.data.errors
+          if(data.response.data.errors){
+            return data.response.data.errors
             ? data.response.data.errors
             : data.response.data.error;
+          }else{
+            return "Une erreur est survenue, veillez reessayer"
+          }
         },
       },
     });
@@ -89,7 +93,7 @@ const Login = () => {
       console.log(`connexion reussi, isAuth: ${user}`);
       console.log(user);
 
-      return navigate("/dashboard/");
+      return navigate("/dashboard/accueil");
     }
   };
 

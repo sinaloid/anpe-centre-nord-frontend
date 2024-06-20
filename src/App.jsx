@@ -28,7 +28,7 @@ function App() {
       <Route path='/modification-du-mot-de-passe' element={ <ResetPassword />} />
       <Route path='/authentification-a-2-facteurs' element={ <Verify2Fa />} />
       
-      <Route path='/dashboard' element={ <Dashboard />} />
+      <Route path='/dashboard/*' element={ <Dashboard />} />
     </Routes>
      
     </>

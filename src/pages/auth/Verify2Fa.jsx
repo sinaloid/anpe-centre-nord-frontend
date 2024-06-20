@@ -33,7 +33,7 @@ const Verify2Fa = () => {
       console.log(`connexion reussi, isAuth: ${user}`);
       console.log(user);
 
-      return navigate("/dashboard/");
+      return navigate("/dashboard/accueil");
     }
   };
 
