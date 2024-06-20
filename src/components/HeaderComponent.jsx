@@ -89,7 +89,7 @@ const HeaderComponent = () => {
         </ul>
 
         <div className="col-md-2 text-end">
-          <NavLink to="dashboard">
+          <NavLink to="connexion">
             <button
               className="btn btn-secondary fw-bold text-uppercase"
               type="button"

@@ -6,11 +6,28 @@ import "bootstrap/dist/js/bootstrap.bundle.js";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
+import { Bounce, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { AppContextProvider } from "./services/context.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <React.StrictMode>
-    <BrowserRouter>
-      <App />
-    </BrowserRouter>
-  </React.StrictMode>
+  <AppContextProvider>
+    <React.StrictMode>
+      <BrowserRouter>
+        <ToastContainer
+          position="top-center"
+          autoClose={5000}
+          hideProgressBar={false}
+          newestOnTop={false}
+          closeOnClick
+          rtl={false}
+          pauseOnFocusLoss
+          draggable
+          theme="colored"
+          transition={Bounce}
+        />
+        <App />
+      </BrowserRouter>
+    </React.StrictMode>
+  </AppContextProvider>
 );

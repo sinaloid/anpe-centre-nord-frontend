@@ -1,25 +1,37 @@
-import { useState } from "react";
+import { useContext, useEffect } from "react";
 import { IconSvg } from "./components/IconSvg";
 import "./dashboard.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { BarChart } from "../components/chart/BarChart";
 import { LineChart } from "../components/chart/LineChart";
+import { AppContext, initialUser } from "../services/context";
+import { deleteUser } from "../services/storage";
 
 const Dashboard = () => {
-  const [viewSearch, setViewSearch] = useState(false);
+  const authCtx = useContext(AppContext);
+  const { user, onUserChange } = authCtx;
+  const navigate = useNavigate();
 
-  const changeViewSearch = (e) => {
-    e.preventDefault();
-    console.log(e.target);
-    if (e.target.value === "viewSearch") {
-      console.log("Clic dans un espace vide.");
-      setViewSearch(true);
+  useEffect(() => {
+    isAuth();
+  }, [user.isAuth]);
+
+  const isAuth = () => {
+    if (user.isAuth == false || user.token == null || user.token == "") {
+      console.log(`connexion échoué, isAuth`);
+      console.log(user);
+
+      return navigate("/");
     } else {
-      console.log("Clic dans un élément.");
-      setViewSearch(false);
+      console.log("isAuth true");
     }
   };
-  document.addEventListener("click", changeViewSearch);
+
+  const deconnect = (e) => {
+    e.preventDefault()
+    deleteUser();
+    onUserChange(initialUser);
+  };
 
   return (
     <>
@@ -364,15 +376,15 @@ const Dashboard = () => {
                     </a>
                   </li>
                   <li className="nav-item">
-                    <a
+                    <div
                       className="nav-link d-flex align-items-center gap-2"
-                      href="#"
+                      onClick={deconnect}
                     >
                       <svg className="bi bi-dash">
                         <use xlinkHref="#door-closed" />
                       </svg>
                       Déconnection
-                    </a>
+                    </div>
                   </li>
                 </ul>
               </div>
