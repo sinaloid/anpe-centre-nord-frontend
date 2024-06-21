@@ -27,25 +27,35 @@ import {
       },
       title: {
         display: true,
-        text: 'Chart.js Bar Chart',
+        text: 'Evolution des candidatures en du mois',
       },
     },
   };
   
-  const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+  const labels = ['Janvier', 'Février', 'Mars', 'Avril','Mai', 'Juin', 'Juillet'];
   
   export const data = {
     labels,
     datasets: [
       {
-        label: 'Dataset 1',
+        label: 'EMPLOI',
         data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
         backgroundColor: 'rgba(255, 99, 132, 1)',
       },
       {
-        label: 'Dataset 2',
+        label: 'STAGE',
         data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
         backgroundColor: 'rgba(53, 162, 235, 1)',
+      },
+      {
+        label: 'FORMATION',
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        backgroundColor: 'rgba(54, 94, 50,1)',
+      },
+      {
+        label: 'PROJET',
+        data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+        backgroundColor: 'rgba(253, 155, 99,1)',
       },
     ],
   };

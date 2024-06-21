@@ -29,7 +29,110 @@ export const HomeDashboard = () => {
 
       <div className="mb-3">
         <div className="row row-cols-1 row-cols-md-4">
-          {[...Array(4).keys()].map((data, idx) => {
+          <div className="col mb-3">
+            <div className="card">
+              <div className="d-flex p-4">
+                <div>
+                  <h5>Offres en cours</h5>
+                  <h3 className="fw-bold text-primary">18</h3>
+                  <span className="text-muted"></span>
+
+                </div>
+                <div className="ms-auto">
+                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col mb-3">
+            <div className="card">
+              <div className="d-flex p-4">
+                <div>
+                  <h5>Candidatures en cours</h5>
+                  <h3 className="fw-bold text-primary">125</h3>
+                  <span className="text-muted"></span>
+
+                </div>
+                <div className="ms-auto">
+                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col mb-3">
+            <div className="card">
+              <div className="d-flex p-4">
+                <div>
+                  <h5>Candidatures acceptées</h5>
+                  <h3 className="fw-bold text-primary">125</h3>
+                  <span className="text-muted"></span>
+
+                </div>
+                <div className="ms-auto">
+                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col mb-3">
+            <div className="card">
+              <div className="d-flex p-4">
+                <div>
+                  <h5>Total des Offres</h5>
+                  <h3 className="fw-bold text-primary">1025</h3>
+                  <span className="text-muted"></span>
+
+                </div>
+                <div className="ms-auto">
+                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col mb-3">
+            <div className="card">
+              <div className="d-flex p-4">
+                <div>
+                  <h5>Total des Postulants</h5>
+                  <h3 className="fw-bold text-primary">200</h3>
+                  <span className="text-muted"></span>
+
+                </div>
+                <div className="ms-auto">
+                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col mb-3">
+            <div className="card">
+              <div className="d-flex p-4">
+                <div>
+                  <h5>Total des Recruteurs</h5>
+                  <h3 className="fw-bold text-primary">90</h3>
+                  <span className="text-muted"></span>
+
+                </div>
+                <div className="ms-auto">
+                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          {/*[...Array(4).keys()].map((data, idx) => {
             return (
               <div className="col mb-3" key={idx}>
                 <div className="card">
@@ -48,7 +151,7 @@ export const HomeDashboard = () => {
                 </div>
               </div>
             );
-          })}
+          })*/}
         </div>
       </div>
 
@@ -64,59 +167,96 @@ export const HomeDashboard = () => {
           </div>
         </div>
       </div>
-
-      <div className="card p-4">
-        <div className="table-responsive small">
-          <div className="d-flex mb-3">
-            <div className="me-auto">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Rechercher..."
-                aria-label="Username"
-                aria-describedby="basic-addon1"
-              />
+      <div className="row row-cols-1 row-cols-md-2 mb-3">
+        <div className="col">
+          <div className="card">
+            <div className="card-header fw-bold">
+              Les 5 dernières candidatures du jours
             </div>
-            <button className="btn btn-primary">Ajouter</button>
-          </div>
-          <table className="table table-hover table-striped1 table-sm1 border-top">
-            <thead className="bg-primary">
-              <tr className="align-middle">
-                <th scope="col">#</th>
-                <th scope="col">Header</th>
-                <th scope="col">Header</th>
-                <th scope="col">Header</th>
-                <th scope="col" className="text-center">
-                  Header
-                </th>
-              </tr>
-            </thead>
-            <tbody className="aign-middle">
-              {[...Array(10).keys()].map((data, idx) => {
-                return (
-                  <tr className="align-middle" key={idx}>
-                    <td>1,001</td>
-                    <td>random</td>
-                    <td>data</td>
-                    <td>placeholder</td>
-                    <td className="text-center">
-                      <div className="btn-group">
-                        <button className="btn btn-outline-primary rounded-2 me-1">
-                          <i className="bi bi-eye-fill"></i>
-                        </button>
-                        <button className="btn btn-outline-danger rounded-2 mx-1">
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button className="btn btn-danger rounded-2 ms-1">
-                          <i className="bi bi-trash-fill"></i>
-                        </button>
-                      </div>
-                    </td>
+            <div className="table-responsive small">
+              <table className="table table-hover table-striped1 table-sm1 border-top">
+                <thead className="bg-primary">
+                  <tr className="align-middle">
+                    <th scope="col">#</th>
+                    <th scope="col">Offre</th>
+                    <th scope="col">Postulant</th>
+                    <th scope="col">Candidature</th>
+                    <th scope="col" className="text-center">
+                      Action
+                    </th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody className="aign-middle">
+                  {[...Array(5).keys()].map((data, idx) => {
+                    return (
+                      <tr className="align-middle" key={idx}>
+                        <td>{1 + idx}</td>
+                        <td>Recrutement de 3 développeurs</td>
+                        <td>Ouedraogo Salif</td>
+                        <td>
+                          <span className="badge text-bg-warning">
+                            {"En cours d'examen"}
+                          </span>
+                        </td>
+                        <td className="text-center">
+                          <div className="btn-group">
+                            <button className="btn btn-outline-primary rounded-2 me-1">
+                              <i className="bi bi-eye-fill"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div className="col">
+          <div className="card">
+            <div className="card-header fw-bold">
+              Les 5 dernières offres du jours
+            </div>
+            <div className="table-responsive small">
+              <table className="table table-hover table-striped1 table-sm1 border-top">
+                <thead className="bg-primary">
+                  <tr className="align-middle">
+                    <th scope="col">#</th>
+                    <th scope="col">Offre</th>
+                    <th scope="col">Statut</th>
+                    <th scope="col">Recruteur</th>
+                    <th scope="col" className="text-center">
+                      Action
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="aign-middle">
+                  {[...Array(5).keys()].map((data, idx) => {
+                    return (
+                      <tr className="align-middle" key={idx}>
+                        <td>{1 + idx}</td>
+                        <td>Recrutement de 10 chauffeurs</td>
+                        <td>
+                          <span className="badge text-bg-warning">
+                            En attente de validation
+                          </span>
+                        </td>
+                        <td>Traore Moussa</td>
+                        <td className="text-center">
+                          <div className="btn-group">
+                            <button className="btn btn-outline-primary rounded-2 me-1">
+                              <i className="bi bi-eye-fill"></i>
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </>

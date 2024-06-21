@@ -13,18 +13,9 @@ const endPoint = {
     niveauxEtudes:"niveaux-etudes",
     niveauxExperience:"niveaux-experience",
     villes:"villes",
+    posts:"posts",
 
-    matieres:"matieres",
-    periodes:"periodes",
-    chapitres:"chapitres",
-    matiereClasse:"matiere-de-la-classe",
-
-    lecons:"lecons",
-    cours:"cours",
-    livreurs:"livreurs",
-    fournisseurs:"fournisseurs",
-    clients:"clients",
-    administrateurs:"administrateurs",
+    
 }
 
 export default endPoint

@@ -1,6 +1,11 @@
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
+import { AppContext } from "../services/context";
 
 const HeaderComponent = () => {
+
+  const authCtx = useContext(AppContext);
+  const { user} = authCtx;
   return (
     <div className="container">
       <header className="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3">
@@ -89,12 +94,12 @@ const HeaderComponent = () => {
         </ul>
 
         <div className="col-md-2 text-end">
-          <NavLink to="connexion">
+          <NavLink to={user.isAuth ? "dashboard/accueil" : "connexion"}>
             <button
               className="btn btn-secondary fw-bold text-uppercase"
               type="button"
             >
-              Connexion
+              {user.isAuth ? "Compte" : "Connexion"}
             </button>
           </NavLink>
         </div>

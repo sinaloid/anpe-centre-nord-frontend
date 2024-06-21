@@ -12,6 +12,8 @@ import ProjetDashboard from "./pages/projet/ProjetDashboard";
 import PostulantDashboard from "./pages/postulant/PostulantDashboard";
 import RecruteurDashboard from "./pages/recruteur/RecruteurDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
+import ActualiteDashboard from "./pages/actualite/ActualiteDashboard";
+import ForumDashboard from "./pages/forum/ForumDashboard";
 
 const Dashboard = () => {
   const authCtx = useContext(AppContext);
@@ -416,6 +418,8 @@ const Dashboard = () => {
               <Route path="/postulants" element={<PostulantDashboard />} />
               <Route path="/recruteurs" element={<RecruteurDashboard />} />
               <Route path="/administration/*" element={<AdminDashboard />} />
+              <Route path="/actualites" element={<ActualiteDashboard />} />
+              <Route path="/forum" element={<ForumDashboard />} />
             </Routes>
           </main>
         </div>

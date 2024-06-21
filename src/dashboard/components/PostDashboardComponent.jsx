@@ -9,18 +9,41 @@ import request from "../../services/request";
 import ModalFormComponent from "../../components/ModalFormComponent";
 import InputField from "../../components/InputField";
 import ModalDeleteComponent from "../../components/ModalDeleteComponent";
+import { label } from "three/examples/jsm/nodes/Nodes.js";
 
 const initValue = {
-  label: "",
+  titre: "",
+  type: "",
   description: "",
 };
-const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
+const PostDashboardComponent = ({ type = "EMPLOI", title }) => {
   const closeFormRef = useRef();
   const closeDeleteRef = useRef();
   const [datas, setDatas] = useState([]);
   const [viewData, setViewData] = useState({});
+  const postType = [
+    {
+      slug:"EMPLOI",
+      label:"Emploi"
+    },
+    {
+      slug:"STAGE",
+      label:"Stage"
+    },
+    {
+      slug:"FORMATION",
+      label:"Formation"
+    },
+    {
+      slug:"PROJET",
+      label:"Projet"
+    }
+  ]
   const validateData = Yup.object({
-    label: Yup.string().required(
+    titre: Yup.string().required(
+      "Ce champ est obligatoire. Veuillez le remplir pour continuer"
+    ),
+    type: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
     ),
     description: Yup.string().required(
@@ -48,7 +71,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
   }, []);
 
   const get = () => {
-    toast.promise(request.get(endPoint.offres + "/type/" + type), {
+    toast.promise(request.get(endPoint.posts), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -74,7 +97,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
     });
   };
   const post = (values) => {
-    toast.promise(request.post(endPoint.offres, values), {
+    toast.promise(request.post(endPoint.posts, values), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -100,7 +123,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
     });
   };
   const update = (values) => {
-    toast.promise(request.post(endPoint.offres + "/" + values.slug, values), {
+    toast.promise(request.post(endPoint.posts + "/" + values.slug, values), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -127,7 +150,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
   };
 
   const destroy = () => {
-    toast.promise(request.delete(endPoint.offres + "/" + viewData.slug), {
+    toast.promise(request.delete(endPoint.posts + "/" + viewData.slug), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -155,7 +178,8 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
 
   const setEditData = (e, data) => {
     e.preventDefault();
-    formik.setFieldValue("label", data.label);
+    formik.setFieldValue("titre", data.titre);
+    formik.setFieldValue("type", data.type);
     formik.setFieldValue("description", data.description);
     formik.setFieldValue("slug", data.slug);
   };
@@ -190,71 +214,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
 
       <div className="mb-3">
         <div className="row row-cols-1 row-cols-md-4">
-          <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>En cours</h5>
-                  <h3 className="fw-bold text-primary">125</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>En attente de validation</h5>
-                  <h3 className="fw-bold text-primary">15</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>Expirés</h5>
-                  <h3 className="fw-bold text-primary">5</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>Total</h5>
-                  <h3 className="fw-bold text-primary">225</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/*[...Array(4).keys()].map((data, idx) => {
+          {[...Array(4).keys()].map((data, idx) => {
             return (
               <div className="col mb-3" key={idx}>
                 <div className="card">
@@ -273,7 +233,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
                 </div>
               </div>
             );
-          })*/}
+          })}
         </div>
       </div>
 
@@ -305,7 +265,8 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
             <thead className="bg-primary">
               <tr className="align-middle">
                 <th scope="col">#</th>
-                <th scope="col">Emplois</th>
+                <th scope="col">Titre</th>
+                <th scope="col">Type</th>
                 <th scope="col">Description</th>
                 <th scope="col">Date</th>
                 <th scope="col" className="text-center">
@@ -318,7 +279,8 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
                 return (
                   <tr className="align-middle" key={idx}>
                     <td>{1 + idx}</td>
-                    <td>{data.label}</td>
+                    <td>{data.titre}</td>
+                    <td>{data.type}</td>
                     <td>{data.description}</td>
                     <td>{data.created_at}</td>
                     <td className="text-center">
@@ -361,18 +323,26 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
         id={"form"}
         title={
           formik.values["slug"]
-            ? "Modification de l'emploi"
-            : "Ajout d'un emploi"
+            ? "Modification du post"
+            : "Ajout d'un post"
         }
         callback={formik.handleSubmit}
         closeRef={closeFormRef}
       >
         <InputField
           type="text"
-          name="label"
-          label={"Intitulé de l'emploi"}
+          name="titre"
+          label={"Titre du sujet"}
           formik={formik}
-          placeholder="Entrez l'intitulé de l'emploi"
+          placeholder="Entrez le titre du sujet"
+        />
+        <InputField
+          type="select"
+          name="type"
+          label={"Catégorie du sujet"}
+          formik={formik}
+          placeholder="Sélectionnez la catégorie du sujet"
+          options={postType}
         />
         <InputField
           type="textaera"
@@ -398,4 +368,4 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
   );
 };
 
-export default OffreDashboardComponent;
+export default PostDashboardComponent;

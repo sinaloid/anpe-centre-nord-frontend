@@ -31,22 +31,43 @@ export const options = {
     },
     title: {
       display: true,
-      text: 'Chart.js Line Chart',
+      text: 'Evolution des offres en fonction du mois',
     },
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+const labels = ['Janvier', 'Février', 'Mars', 'Avril','Mai', 'Juin', 'Juillet'];
 
 export const data = {
   labels,
   datasets: [
     {
       fill: true,
-      label: 'Dataset 2',
+      label: 'EMPLOI',
       data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
-      borderColor: 'rgb(53, 162, 235)',
-      backgroundColor: 'rgba(53, 162, 235, 0.5)',
+      borderColor: 'rgb(255, 99, 132)',
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+    },
+    {
+      fill: true,
+      label: 'STAGE',
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+      borderColor: 'rgba(53, 162, 235, 1)',
+      backgroundColor: 'rgba(53, 162, 235, 0.2)',
+    },
+    {
+      fill: true,
+      label: 'FORMATION',
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+      borderColor: 'rgba(54, 94, 50,1)',
+      backgroundColor: 'rgba(54, 94, 50,0.2)',
+    },
+    {
+      fill: true,
+      label: 'PROJET',
+      data: labels.map(() => faker.datatype.number({ min: 0, max: 1000 })),
+      borderColor: 'rgba(253, 155, 99,1)',
+      backgroundColor: 'rgba(253, 155, 99,0.2)',
     },
   ],
 };
