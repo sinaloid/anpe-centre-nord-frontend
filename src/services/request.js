@@ -47,7 +47,7 @@ request.interceptors.response.use(
                 deleteUser(); // Fonction pour supprimer les informations de l'utilisateur du stockage
                 const pathname = window.location.pathname
                 if(!pathname.includes("connexion") && !pathname.includes("authentification-a-2-facteurs"  && !pathname.includes("validation-du-code-a-2-facteurs"))){
-                    //window.location.href = '/connexion'; // Rediriger vers la page de connexion
+                    window.location.href = '/connexion'; // Rediriger vers la page de connexion
                     console.log("include :" + !pathname.includes("validation-du-code-a-2-facteurs"))
                 }
             }
