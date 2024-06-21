@@ -25,7 +25,7 @@ const ContainerComponent = ({ children }) => {
               <div className="mx-1 d-inline-block">
                 <i className="bi bi-linkedin"></i>
               </div>
-              <div className="mx-1 d-block">+226 xx xx xx xx</div>
+              <div className="mx-1 d-block"><a className="text-body-emphasis text-decoration-none" href="tel:+22670053547">+226 70 05 35 47</a> </div>
             </div>
           </div>
         </div>
