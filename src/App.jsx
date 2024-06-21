@@ -24,9 +24,12 @@ function App() {
       <Route path='/connexion' element={ <Login />} />
       <Route path='/inscription' element={ <Register />} />
       <Route path='/verification-du-code-otp' element={ <VerifyOtp />} />
+      <Route path='/validation-du-code-otp/:slug/:otp' element={ <VerifyOtp />} />
       <Route path='/mot-de-passe-oublie' element={ <GetOtp />} />
       <Route path='/modification-du-mot-de-passe' element={ <ResetPassword />} />
       <Route path='/authentification-a-2-facteurs' element={ <Verify2Fa />} />
+      <Route path='/validation-du-code-a-2-facteurs/:slug/:otp' element={ <Verify2Fa />} />
+
       
       <Route path='/dashboard/*' element={ <Dashboard />} />
     </Routes>

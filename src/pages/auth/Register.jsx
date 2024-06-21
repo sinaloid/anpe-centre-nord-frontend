@@ -87,9 +87,12 @@ const Register = () => {
       error: {
         render({ data }) {
           console.log(data);
-          return data.response.data.errors
-            ? data.response.data.errors
-            : data.response.data.error;
+          if(data?.response?.data?.message){
+            return data?.response?.data?.message
+          }
+          return data?.response?.data?.errors
+            ? data?.response?.data?.errors
+            : data?.response?.data?.error;
         },
       },
     });
@@ -122,27 +125,31 @@ const Register = () => {
                   nos services. Veuillez fournir des informations exactes pour
                   faciliter votre inscription
                 </div>
-
+                
                 <InputField
                   type="text"
+                  label="Nom"
                   name="nom"
                   formik={formik}
                   placeholder="Entrez votre nom"
                 />
                 <InputField
                   type="text"
+                  label="Prénom"
                   name="prenom"
                   formik={formik}
                   placeholder="Entrez votre prénom"
                 />
                 <InputField
                   type="date"
+                  label="Date de naissance"
                   name="date_de_naissance"
                   formik={formik}
                   placeholder="Sélectionnez votre date de naissance"
                 />
                 <InputField
                   type="select"
+                  label="Genre"
                   name="genre"
                   formik={formik}
                   placeholder="Sélectionnez votre genre"
@@ -159,6 +166,7 @@ const Register = () => {
                 />
                 <InputField
                   type="select"
+                  label="Profile"
                   name="profile"
                   formik={formik}
                   placeholder="Sélectionnez votre profile"
@@ -175,16 +183,19 @@ const Register = () => {
                 />
                 <InputField
                   type="text"
+                  label="Téléphone"
                   name="telephone"
                   formik={formik}
                   placeholder="Entrez votre numéro de téléphone"
                 />
                 <InputField
                   type="email"
+                  label="Email"
                   name="email"
                   formik={formik}
                   placeholder="Entrez votre email"
                 />
+                <div className="mb-2">Mot de passe</div>
 
                 <div className="position-relative">
                   <InputField

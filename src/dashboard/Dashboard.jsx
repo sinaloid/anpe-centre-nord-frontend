@@ -6,6 +6,12 @@ import { AppContext, initialUser } from "../services/context";
 import { deleteUser } from "../services/storage";
 import HomeDashboard from "./pages/home/HomeDashboard";
 import EmploiDashboard from "./pages/emploi/EmploiDashboard";
+import StageDashboard from "./pages/stage/StageDashboard";
+import FormationDashboard from "./pages/formation/FormationDashboard";
+import ProjetDashboard from "./pages/projet/ProjetDashboard";
+import PostulantDashboard from "./pages/postulant/PostulantDashboard";
+import RecruteurDashboard from "./pages/recruteur/RecruteurDashboard";
+import AdminDashboard from "./pages/admin/AdminDashboard";
 
 const Dashboard = () => {
   const authCtx = useContext(AppContext);
@@ -28,10 +34,15 @@ const Dashboard = () => {
   };
 
   const deconnect = (e) => {
-    e.preventDefault()
+    e.preventDefault();
     deleteUser();
     onUserChange(initialUser);
   };
+
+  const goBack = (e) => {
+    e.preventDefault()
+    navigate(-1)
+  }
 
   return (
     <>
@@ -329,7 +340,7 @@ const Dashboard = () => {
                   <li className="nav-item">
                     <NavLink
                       className="nav-link d-flex align-items-center gap-2"
-                      to="candidats"
+                      to="postulants"
                     >
                       <svg className="bi bi-dash">
                         <use xlinkHref="#people" />
@@ -351,12 +362,12 @@ const Dashboard = () => {
                   <li className="nav-item">
                     <NavLink
                       className="nav-link d-flex align-items-center gap-2"
-                      to="recruteurs"
+                      to="administration"
                     >
                       <svg className="bi bi-dash">
                         <use xlinkHref="#people" />
                       </svg>
-                      Administrateurs
+                      Administration
                     </NavLink>
                   </li>
                 </ul>
@@ -392,11 +403,19 @@ const Dashboard = () => {
           </div>
 
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-body-tertiary">
-            
+            <div className="d-iniline-block my-2" onClick={goBack}>
+            <i className="bi bi-chevron-left"></i>
+              <span className="fw-bold cursor">Retour</span>
+            </div>
             <Routes>
-              
               <Route path="/accueil" element={<HomeDashboard />} />
               <Route path="/emplois" element={<EmploiDashboard />} />
+              <Route path="/stages" element={<StageDashboard />} />
+              <Route path="/formations" element={<FormationDashboard />} />
+              <Route path="/projets" element={<ProjetDashboard />} />
+              <Route path="/postulants" element={<PostulantDashboard />} />
+              <Route path="/recruteurs" element={<RecruteurDashboard />} />
+              <Route path="/administration/*" element={<AdminDashboard />} />
             </Routes>
           </main>
         </div>

@@ -76,13 +76,19 @@ const Login = () => {
       error: {
         render({ data }) {
           console.log(data);
-          if(data.response.data.errors){
-            return data.response.data.errors
-            ? data.response.data.errors
-            : data.response.data.error;
-          }else{
-            return "Une erreur est survenue, veillez reessayer"
+          if(!data?.response?.data?.user?.email_verified_at){
+            onUserChange({
+                ...user,
+                user:values.user
+            })
+            window.location.href="/verification-du-code-otp"
           }
+          if(data?.response?.data?.message){
+            return data?.response?.data?.message
+          }
+          return data?.response?.data?.errors
+            ? data?.response?.data?.errors
+            : data?.response?.data?.error;
         },
       },
     });
@@ -114,17 +120,18 @@ const Login = () => {
 
                 <InputField
                   type="email"
+                  label="Email"
                   name="user"
                   formik={formik}
-                  placeholder="Entrer votre email"
+                  placeholder="Entrez votre email"
                 />
-
+                <div className="mb-2">Mot de passe</div>
                 <div className="position-relative">
                   <InputField
                     type={inputType}
                     name="password"
                     formik={formik}
-                    placeholder="Entrer votre mot de passe"
+                    placeholder="Entrez votre mot de passe"
                   >
                     <span
                       className="position-absolute"

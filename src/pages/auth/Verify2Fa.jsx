@@ -1,5 +1,5 @@
 import { useContext, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import login from "../../assets/images/banier.jpg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -16,6 +16,7 @@ const Verify2Fa = () => {
   const authCtx = useContext(AppContext);
   const { user, onUserChange } = authCtx;
   const navigate = useNavigate();
+  let { slug, otp } = useParams();
 
   const validateData = Yup.object({
     code: Yup.string()
@@ -27,6 +28,15 @@ const Verify2Fa = () => {
   useEffect(() => {
     isAuth();
   }, [user.isAuth]);
+  
+  useEffect(() => {
+    if (slug && otp) {
+      handleSubmit({
+        slug: slug,
+        code: otp,
+      });
+    }
+  }, []);
 
   const isAuth = () => {
     if (user.isAuth === true && user.token != null && user.token !== "") {
@@ -42,7 +52,7 @@ const Verify2Fa = () => {
     validationSchema: validateData,
     onSubmit: (values) => {
       console.log(values);
-      values.email = user.user
+      values.email = user.user;
       handleSubmit(values);
     },
   });
@@ -66,7 +76,7 @@ const Verify2Fa = () => {
             name: res.data.user.nom + " " + res.data.user.prenom,
             token: res.data.access_token,
             token_refresh: null,
-            user:null
+            user: null,
           });
           return res.data.message;
         },
@@ -74,12 +84,12 @@ const Verify2Fa = () => {
       error: {
         render({ data }) {
           console.log(data);
-          if(data.response.status == "401"){
-            return data.response.data.message
+          if (data?.response?.data?.message) {
+            return data?.response?.data?.message;
           }
-          return data.response.data.errors
-            ? data.response.data.errors
-            : data.response.data.error;
+          return data?.response?.data?.errors
+            ? data?.response?.data?.errors
+            : data?.response?.data?.error;
         },
       },
     });

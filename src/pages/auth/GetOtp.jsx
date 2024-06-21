@@ -70,9 +70,12 @@ const GetOtp = () => {
       error: {
         render({ data }) {
           console.log(data);
-          return data.response.data.errors
-            ? data.response.data.errors
-            : data.response.data.error;
+          if(data?.response?.data?.message){
+            return data?.response?.data?.message
+          }
+          return data?.response?.data?.errors
+            ? data?.response?.data?.errors
+            : data?.response?.data?.error;
         },
       },
     });
@@ -100,6 +103,7 @@ const GetOtp = () => {
                 <InputField
                   type="text"
                   name="email"
+                  label="Email"
                   formik={formik}
                   placeholder="Entrez votre email"
                 />

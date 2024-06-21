@@ -104,9 +104,19 @@ div > i {
   color: var(--primary-color);
 }
 
+.cursor{
+  cursor: pointer;
+}
+
 div > i:hover {
   font-size: 24px;
   color: var(--secondary-color);
+}
+
+.card-btn:hover{
+  background-color: var(--primary-color) !important;
+  color: var(--white-color) !important;
+  border-color: var(--primary-color) !important;
 }
 
 .btn-primary,.btn-outline-primary:hover{

@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -12,7 +11,7 @@ import { AppContextProvider } from "./services/context.jsx";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <AppContextProvider>
-    <React.StrictMode>
+    {/**<React.StrictMode> */}
       <BrowserRouter>
         <ToastContainer
           position="top-center"
@@ -28,6 +27,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         />
         <App />
       </BrowserRouter>
-    </React.StrictMode>
+    {/**</React.StrictMode> */}
   </AppContextProvider>
 );

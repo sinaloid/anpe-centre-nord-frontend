@@ -1,5 +1,5 @@
-import { useContext } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import login from "../../assets/images/banier.jpg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
@@ -23,6 +23,7 @@ const VerifyOtp = () => {
   const authCtx = useContext(AppContext);
   const { user, onUserChange } = authCtx;
   const navigate = useNavigate();
+  let { slug, otp } = useParams();
 
   const validateData = Yup.object({
     otp: Yup.string()
@@ -37,9 +38,22 @@ const VerifyOtp = () => {
     onSubmit: (values) => {
       console.log(values);
       values.email = user.user;
+      if(slug){
+        values.slug = slug
+      }
+
       handleSubmit(values);
     },
   });
+
+  useEffect(() => {
+    if (slug && otp) {
+      handleSubmit({
+        slug: slug,
+        otp: otp,
+      });
+    }
+  }, [slug, otp]);
 
   const handleSubmit = (data) => {
     //console.log(data);
@@ -61,9 +75,12 @@ const VerifyOtp = () => {
       error: {
         render({ data }) {
           console.log(data);
-          return data.response.data.errors
-            ? data.response.data.errors
-            : data.response.data.error;
+          if(data?.response?.data?.message){
+            return data?.response?.data?.message
+          }
+          return data?.response?.data?.errors
+            ? data?.response?.data?.errors
+            : data?.response?.data?.error;
         },
       },
     });
@@ -71,7 +88,12 @@ const VerifyOtp = () => {
 
   const getOtp = (e) => {
     e.preventDefault();
-    toast.promise(request.post(endPoint.getOtp, { email: user.user }), {
+    const data = {
+      slug : slug,
+      email: user.user
+    }
+    
+    toast.promise(request.post(endPoint.getOtp, data), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -115,6 +137,7 @@ const VerifyOtp = () => {
 
                 <InputField
                   type="text"
+                  label="Code OTP"
                   name="otp"
                   formik={formik}
                   placeholder="Entrez le code OTP"

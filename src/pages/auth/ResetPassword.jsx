@@ -84,9 +84,12 @@ const ResetPassword = () => {
       error: {
         render({ data }) {
           console.log(data);
-          return data.response.data.errors
-            ? data.response.data.errors
-            : data.response.data.error;
+          if(data?.response?.data?.message){
+            return data?.response?.data?.message
+          }
+          return data?.response?.data?.errors
+            ? data?.response?.data?.errors
+            : data?.response?.data?.error;
         },
       },
     });
@@ -112,7 +115,7 @@ const ResetPassword = () => {
                   <br />
                   <span className="text-primary fw-bold">{user.user}</span>
                 </div>
-
+                <div className="mb-2">Mot de passe</div>
                 <div className="position-relative">
                   <InputField
                     type={inputType}
@@ -149,6 +152,7 @@ const ResetPassword = () => {
 
                 <InputField
                   type="text"
+                  label="Code OTP"
                   name="otp"
                   formik={formik}
                   placeholder="Entrez le code OTP"
