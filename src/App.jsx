@@ -21,6 +21,8 @@ function App() {
       <Route path='/offres' element={ <OffrePage />} />
       <Route path='/actualites' element={ <ActualitePage />} />
       <Route path='/forum' element={ <ForumPage />} />
+      <Route path='/ressources-conseils' element={ <ForumPage />} />
+      <Route path='/a-propos' element={ <ForumPage />} />
       <Route path='/connexion' element={ <Login />} />
       <Route path='/inscription' element={ <Register />} />
       <Route path='/verification-du-code-otp' element={ <VerifyOtp />} />
