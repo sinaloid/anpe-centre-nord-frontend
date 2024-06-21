@@ -9,7 +9,6 @@ import request from "../../services/request";
 import ModalFormComponent from "../../components/ModalFormComponent";
 import InputField from "../../components/InputField";
 import ModalDeleteComponent from "../../components/ModalDeleteComponent";
-import { label } from "three/examples/jsm/nodes/Nodes.js";
 
 const initValue = {
   titre: "",
