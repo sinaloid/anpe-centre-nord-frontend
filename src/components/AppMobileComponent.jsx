@@ -2,7 +2,7 @@ import appMobile from "../assets/images/mobile-app.png";
 import playstore from "../assets/images/google-play-badge.png";
 const AppMobileComponent = () => {
   return (
-    <div className="row my-5">
+    <div className="row my-5 border bg-white rounded-3">
       <div className="col-12 col-md-6">
         <img
           width={"100%"}

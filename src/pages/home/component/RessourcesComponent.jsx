@@ -1,4 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 const RessourcesComponent = () => {
+
+  const navigate = useNavigate()
+
+  const changePage = (e, name) => {
+    e.preventDefault()
+    navigate("/"+name)
+  }
   return (
     <div className="container mb-4">
       <div className="row">
@@ -17,7 +26,7 @@ const RessourcesComponent = () => {
             <br />
           </p>
           <div>
-            <button className="btn btn-secondary mb-3 fw-bold">
+            <button className="btn btn-secondary mb-3 fw-bold" onClick={(e) => changePage(e, "ressources-conseils")}>
               {"Accedez aux ressources & conseils"}
             </button>{" "}
           </div>

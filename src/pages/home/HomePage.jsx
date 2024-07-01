@@ -4,8 +4,14 @@ import AppMobileComponent from "../../components/AppMobileComponent";
 import ForumComponent from "./component/ForumComponent";
 import OffreDuJourComponent from "./component/OffreDuJourComponent";
 import RessourcesComponent from "./component/RessourcesComponent";
+import {useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+  const navigate = useNavigate();
+
+  const changePage = (e, name) => {
+    navigate("/" + name);
+  };
   return (
     <ContainerComponent>
       <div className="container">
@@ -25,11 +31,17 @@ const HomePage = () => {
               <br />
             </p>
             <div>
-              <button className="btn btn-secondary mb-3 fw-bold">
+              <button
+                className="btn btn-secondary mb-3 fw-bold"
+                onClick={(e) => changePage(e, "inscription")}
+              >
                 {"Inscrivez-vous en tant que chercheur/chercheuse d'emploi"}
               </button>{" "}
               <br />
-              <button className="btn btn-outline-secondary mb-3 fw-bold">
+              <button
+                className="btn btn-outline-secondary mb-3 fw-bold"
+                onClick={(e) => changePage(e, "inscription")}
+              >
                 {"Inscrivez-vous en tant que recruteur/recruteuse"}
               </button>
             </div>
@@ -45,6 +57,8 @@ const HomePage = () => {
           </div>
         </div>
       </div>
+
+      <ForumComponent />
       <div className="row">
         <div className="col-12">
           <div className="container">
@@ -52,8 +66,6 @@ const HomePage = () => {
           </div>
         </div>
       </div>
-      <ForumComponent />
-      
     </ContainerComponent>
   );
 };

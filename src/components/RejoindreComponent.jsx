@@ -1,5 +1,13 @@
+import { useNavigate } from "react-router-dom";
+
 // eslint-disable-next-line react/prop-types
 const RejoindreComponent = ({titre, content}) => {
+
+  const navigate = useNavigate()
+
+  const changePage = (e,name) => {
+    navigate('/'+name)
+  }
   return (
     <div className="container mb-4">
       <div className="row">
@@ -12,7 +20,7 @@ const RejoindreComponent = ({titre, content}) => {
             <br />
           </p>
           <div>
-            <button className="btn btn-secondary mb-3 fw-bold">
+            <button className="btn btn-secondary mb-3 fw-bold" onClick={(e) => changePage(e, "inscription")}>
               {"Inscrivez-vous"}
             </button>{" "}
           </div>

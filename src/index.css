@@ -1,7 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 :root {
   --primary-color: #004c12;
+  --primary-light-color: rgba(0, 76, 18, 0.1);
   --secondary-color:#fec809;
+  --gray-color:#f1f1f1;
   --gray-light-color:#F6F6F6;
   --white-color: #FFFFFF;
   --black-color: #000;
@@ -29,7 +31,7 @@ body {
   line-height: 1.5;
   color: var(--black-color);
   text-align: left;
-  background-color: #fff;
+  background-color: #fbfaf8;
 }
 
 
@@ -61,6 +63,10 @@ body {
 
 .bg-primary-light{
   background-color:#DFE9E1;
+}
+
+.bg-gray{
+  background-color: var(--gray-color) !important;
 }
 
 .bg-gray-light{
@@ -164,6 +170,35 @@ div > i:hover {
 .icon-circle{
   width: 48px;
   height: 48px;
+}
+
+.card-offre:hover{
+  background-color: var(--primary-light-color);
+}
+
+.forum-post:hover{
+  background-color: var(--gray-light-color) !important;
+}
+.forum-post:hover > div > div > .btn-forum , .card-offre:hover > div > div > div > div > .btn-postuler{
+  background-color: var(--primary-color) !important;
+  color: var(--white-color);
+}
+
+.forum-post:hover > div > div > div > .d-none{
+  display: inline !important;
+}
+
+.card-offre:hover > div > div > div > div > div > .d-none{
+  display: inline !important;
+}
+
+
+.btn-forum{
+  height: 28px !important;
+}
+.btn-postuler {
+  width: 75px !important;
+  height: 28px !important;
 }
 
 

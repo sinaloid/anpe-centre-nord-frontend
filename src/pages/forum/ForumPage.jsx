@@ -47,18 +47,21 @@ const ForumPage = () => {
             {[...Array(10)].map((data, idx) => {
               return (
                 <div
-                  className={`row border-top py-2 ${
-                    idx % 2 === 0 ? "bg-gray-light" : ""
+                  className={`row border py-2 cursor forum-post ${
+                    idx % 2 === 0 ? "bg-primary-light" : "bg-white"
                   }`}
                   key={idx}
                 >
                   <div className="col-12 col-md-9">
-                    <Link
-                      to="#"
-                      className="py-2 fs-5 text-decoration-none text-primary"
-                    >
-                      Titre du sujet
-                    </Link>
+                    <div className="d-flex">
+                      <Link
+                        to="#"
+                        className="py-2 fs-5 me-auto text-decoration-none text-primary link-title"
+                      >
+                        Titre du sujet
+                      </Link>
+                    </div>
+
                     <p className="mb-2 pb-2 text-muted">
                       Lorem ipsum dolor sit amet consectetur adipisicing elit.
                       Autem exercitationem, in atque accusamus nesciunt soluta
@@ -68,7 +71,12 @@ const ForumPage = () => {
                     </p>
                   </div>
                   <div className="col-12 col-md-3">
-                    <div className="d-flex align-items-center justify-content-between h-100">
+                    <div className="d-flex">
+                      <div className="ms-auto btn btn-sm btn-forum px-5">
+                        <span className="d-none">Voir le sujet</span>
+                      </div>
+                    </div>
+                    <div className="d-flex align-items-center justify-content-between h-1001 mt-3">
                       <div className="text-muted me-2 text-center">
                         <span className="text-12">Categorie</span> <br />
                         <span className="fw-bold">Emploi</span>
@@ -78,11 +86,11 @@ const ForumPage = () => {
                         <span className="fw-bold">22</span>
                       </div>
                       <div className="text-muted me-2 text-center">
-                      <span className="text-12">Vues</span> <br />
+                        <span className="text-12">Vues</span> <br />
                         <span className="fw-bold">100k</span>
                       </div>
                       <div className="text-muted me-2 text-center">
-                      <span className="text-12">Publier le</span> <br />
+                        <span className="text-12">Publier le</span> <br />
                         <span className="fw-bold">12/05/2024</span>
                       </div>
                     </div>

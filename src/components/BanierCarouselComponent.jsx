@@ -6,8 +6,8 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-import banier from "../assets/images/banier.jpg";
-import banier1 from "../assets/images/banier-1.jpg";
+import banier from "../assets/images/banier_1.jpg";
+import banier1 from "../assets/images/banier_2.jpg";
 
 // import required modules
 import { EffectFade, Navigation, Pagination } from "swiper/modules";

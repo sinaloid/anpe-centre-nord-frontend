@@ -39,10 +39,12 @@ const FooterComponent = () => {
           <div className="text-uppercase fw-bold mb-3">Contacts</div>
           <div className="d-flex">
             <div className="text-start">
-            <div className="d-block mb-1">Tél: +226 xx xx xx xx</div>
-              <div className="d-block mb-1">Email: infos@gmail.com</div>
+              <div className="d-block mb-1">Tél: +226 24 45 33 06</div>
+              <div className="d-block mb-1">Email: anpecn@yahoo.com</div>
               <div className="me-1 d-inline-block social-container">
-                <i className="bi bi-facebook"></i>
+                <a href="https://www.facebook.com/share/gkoX5zYK4NZ1Hd6B/?mibextid=qi2Omg">
+                  <i className="bi bi-facebook"></i>
+                </a>
               </div>
               <div className="mx-1 d-inline-block">
                 <i className="bi bi-whatsapp"></i>
@@ -50,7 +52,6 @@ const FooterComponent = () => {
               <div className="mx-1 d-inline-block">
                 <i className="bi bi-linkedin"></i>
               </div>
-              
             </div>
           </div>
         </div>
@@ -68,7 +69,7 @@ const FooterComponent = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "nav-link-footer text-uppercase"
-                        : "nav-link-footer nav-link-footer-acive text-uppercase"
+                        : "nav-link-footer nav-link-footer-acive  text-uppercase"
                     }
                   >
                     {data.name}

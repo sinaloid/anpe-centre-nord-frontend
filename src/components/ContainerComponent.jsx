@@ -1,15 +1,21 @@
-import anpe from "../assets/images/anpe.png";
+import { useEffect } from "react";
+import anpe from "../assets/images/anpe.jpeg";
 import armoiries from "../assets/images/armoiries.png";
 import BanierComponent from "./BanierComponent";
 import FooterComponent from "./FooterComponent";
 // eslint-disable-next-line react/prop-types
-const ContainerComponent = ({ children }) => {
+const ContainerComponent = ({ children, pageTitle="ANPE CENTRE NORD" }) => {
+  let pathname = window.location.pathname;
+
+  useEffect(() => {
+    window.document.title = pageTitle;
+  }, [pathname]);
   return (
     <div className="container-fluid">
       <div className="container">
         <div className="d-flex align-items-center justify-content-between">
           <div className="">
-            <img width={"80px"} src={anpe} alt="" />
+            <img width={"120px"} src={anpe} alt="" />
           </div>
           <div className="">
             <img width={"80px"} src={armoiries} alt="" />
@@ -25,7 +31,14 @@ const ContainerComponent = ({ children }) => {
               <div className="mx-1 d-inline-block">
                 <i className="bi bi-linkedin"></i>
               </div>
-              <div className="mx-1 d-block"><a className="text-body-emphasis text-decoration-none" href="tel:+22670053547">+226 70 05 35 47</a> </div>
+              <div className="mx-1 d-block">
+                <a
+                  className="text-body-emphasis text-decoration-none"
+                  href="tel:+22624453306"
+                >
+                  +226 24 45 33 06  
+                </a>{" "}
+              </div>
             </div>
           </div>
         </div>

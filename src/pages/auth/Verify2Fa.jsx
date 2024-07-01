@@ -1,6 +1,6 @@
 import { useContext, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
-import login from "../../assets/images/banier.jpg";
+import login from "../../assets/images/equipe.jpg";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import request from "../../services/request";
