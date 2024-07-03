@@ -9,7 +9,7 @@ const JobDetailCardComponent = () => {
   };
   return (
     <div
-      className="card my-2 card-offre cursor"
+      className="card my-2 cursor"
       onClick={(e) => goToDetail(e, "slifufds")}
     >
       <div className="card-body">
@@ -32,7 +32,7 @@ const JobDetailCardComponent = () => {
             </div>
           </div>
           <div className=" text-end">
-            <button className="btn btn-primary  py-1 px-2">Postuler</button>
+            <button className="btn btn-sm btn-primary  py-1 px-2">Postuler</button>
             <div className="d-flex my-1 flex-wrap">
               <div className="text-primary d-flex align-items-center">
                 <i className="bi bi-clock-fill"></i> <span className="ps-1">Publier le : 12/12/2024</span>
