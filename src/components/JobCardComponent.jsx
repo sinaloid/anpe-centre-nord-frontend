@@ -1,6 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
+import { colors } from "../data/array";
+import JobCardLogo from "./JobCardLogo";
 
-const JobCardComponent = () => {
+const JobCardComponent = ({data}) => {
 
   const navigate = useNavigate()
 
@@ -12,16 +15,14 @@ const JobCardComponent = () => {
     <div className="card my-2 card-offre cursor" onClick={e => goToDetail(e,"slifufds")}>
       <div className="card-body">
         <div className="d-flex align-items-center justify-content-between flex-wrap">
-          <div className="d-flex align-items-center">
-            <div className="job-logo d-flex justify-content-center align-items-center rounded-2">
-              B.
-            </div>
+          <div className="col-md-6 d-flex align-items-center">
+            <JobCardLogo data={data} />
             <div className="ms-3">
-              <h5 className="card-title fw-bold">{"Nom de l'emploi"}</h5>
-              <p className="card-text text-muted">{"Nom de l'entrprise"}</p>
+              <h5 className="card-title fw-bold">{data?.label}</h5>
+              <p className="card-text text-muted">{data.entreprise}</p>
             </div>
           </div>
-          <div>
+          <div className="col-12 col-md">
             <div className="text-primary d-flex align-items-center">
               <i className="bi bi-geo-alt-fill me-1"></i> Centre Nord, Kaya
             </div>
@@ -29,9 +30,9 @@ const JobCardComponent = () => {
               <i className="bi bi-people-fill me-1"></i> 125 candidatures
             </div>
           </div>
-          <div className=" text-end">
+          <div className="col-12 col-md text-end">
             <div className="text-primary">100k-200k/mois</div>
-            <div className="d-flex my-1 flex-wrap">
+            <div className="d-flex justify-content-end my-1 flex-wrap">
               <div className="btn btn-sm btn-postuler  py-1 px-2">
                 <span className="d-none">Postuler</span>
               </div>

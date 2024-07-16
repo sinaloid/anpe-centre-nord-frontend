@@ -1,8 +1,8 @@
 import axios from 'axios';
 import { getUser, deleteUser } from './storage';
 
-export const BASE_URL = "https://api.anpebf.com/";
-//export const BASE_URL = "http://127.0.0.1:8000/";
+//export const BASE_URL = "https://api.anpebf.com/";
+export const BASE_URL = "http://127.0.0.1:8000/";
 const API_URL = `${BASE_URL}api/`;
 
 const request = axios.create({

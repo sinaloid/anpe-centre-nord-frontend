@@ -167,8 +167,8 @@ export const HomeDashboard = () => {
           </div>
         </div>
       </div>
-      <div className="row row-cols-1 row-cols-md-2 mb-3">
-        <div className="col">
+      <div className="row row-cols-1 row-cols-md-2">
+        <div className="col mb-4">
           <div className="card">
             <div className="card-header fw-bold">
               Les 5 dernières candidatures du jours

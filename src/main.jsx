@@ -3,6 +3,8 @@ import App from "./App.jsx";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap/dist/js/bootstrap.bundle.js";
 import "bootstrap-icons/font/bootstrap-icons.min.css";
+import "@blocknote/core/fonts/inter.css";
+import "@blocknote/core/style.css";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
 import { Bounce, ToastContainer } from "react-toastify";

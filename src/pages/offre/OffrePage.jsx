@@ -1,10 +1,20 @@
+import { useEffect, useState } from "react";
 import AppMobileComponent from "../../components/AppMobileComponent";
 import ContainerComponent from "../../components/ContainerComponent";
 import JobCardComponent from "../../components/JobCardComponent";
 import RejoindreComponent from "../../components/RejoindreComponent";
 import SearchBarComponent from "../../components/SearchBarComponent";
+import useRequest from "../../hooks/useRequest";
+import endPoint from "../../services/endPoint";
 
 const OffrePage = () => {
+  const {get} = useRequest(true)
+  const [datas,setDatas] = useState([])
+
+  useEffect(() => {
+    get("public/"+endPoint.offres,setDatas)
+  },[])
+
   return (
     <ContainerComponent>
       <div className="container">
@@ -42,10 +52,10 @@ const OffrePage = () => {
           <div className="d-flex mt-3 mb-2">
             <span className="">125 résultats</span>
           </div>
-          {[...Array(6).keys()].map((data) => {
+          {datas.map((data) => {
         return (
-          <div key={data}>
-            <JobCardComponent />
+          <div key={data.slug}>
+            <JobCardComponent data={data} />
           </div>
         );
       })}
