@@ -50,7 +50,7 @@ const HomePage = () => {
         <OffreDuJourComponent />
       </div>
       <RessourcesComponent />
-      <div className="row bg-gray-light">
+      <div className="row">
         <div className="col-12">
           <div className="container">
             <ActualiteDuJourComponent />

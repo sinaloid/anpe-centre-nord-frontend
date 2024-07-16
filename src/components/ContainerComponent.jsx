@@ -46,7 +46,7 @@ const ContainerComponent = ({ children, pageTitle="ANPE CENTRE NORD" }) => {
       <BanierComponent />
       {children}
 
-      <div className="row bg-gray-light border-top py-2">
+      <div className="row bg-white  border-top py-2">
         <div className="col-12">
           <FooterComponent />
         </div>

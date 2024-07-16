@@ -5,7 +5,7 @@ const PostulantDashboard = () => {
   
   return (
     <>
-      <UserDashboardComponent title={"Liste des postulants"} type="ADMIN" />
+      <UserDashboardComponent title={"Liste des postulants"} type="POSTULANT" />
     </>
   );
 };

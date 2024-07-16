@@ -76,7 +76,7 @@ const Login = () => {
       error: {
         render({ data }) {
           console.log(data);
-          if(!data?.response?.data?.user?.email_verified_at){
+          if(data?.response?.data?.user && !data?.response?.data?.user?.email_verified_at){
             onUserChange({
                 ...user,
                 user:values.user
