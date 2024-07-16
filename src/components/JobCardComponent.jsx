@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useNavigate } from "react-router-dom";
-import { colors } from "../data/array";
 import JobCardLogo from "./JobCardLogo";
 
 const JobCardComponent = ({data}) => {
@@ -19,7 +18,7 @@ const JobCardComponent = ({data}) => {
             <JobCardLogo data={data} />
             <div className="ms-3">
               <h5 className="card-title fw-bold">{data?.label}</h5>
-              <p className="card-text text-muted">{data.entreprise}</p>
+              <p className="card-text text-muted">{data?.entreprise}</p>
             </div>
           </div>
           <div className="col-12 col-md">
