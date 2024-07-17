@@ -55,7 +55,8 @@ const HeaderComponent = () => {
               Actualités
             </NavLink>
           </li>
-          <li>
+          {/**
+           * <li>
             <NavLink
               to={"/forum"}
               className={({ isActive }) =>
@@ -67,6 +68,7 @@ const HeaderComponent = () => {
               Forum
             </NavLink>
           </li>
+           */}
           <li>
             <NavLink
               to={"/ressources-conseils"}

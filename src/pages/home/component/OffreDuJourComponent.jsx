@@ -1,7 +1,18 @@
+import { useEffect, useState } from "react";
 import JobCardComponent from "../../../components/JobCardComponent";
 import SearchBarComponent from "../../../components/SearchBarComponent";
+import useRequest from "../../../hooks/useRequest";
+import endPoint from "../../../services/endPoint";
+import useFunction from "../../../hooks/useFunction";
 
 const OffreDuJourComponent = () => {
+
+  const [data,setData] = useState({})
+  const {get} = useRequest()
+  const {goTo} = useFunction()
+  useEffect(() => {
+    get("public/"+endPoint.offres,setData)
+  },[])
   return (
     <div className="row my-5">
       <div className="col-12 text-center">
@@ -36,24 +47,19 @@ const OffreDuJourComponent = () => {
         </div>
       </div>
       <div className="d-flex mt-3 mb-2">
-        <span className="">125 résultats</span>
-        <div className="ms-auto d-flex align-items-center">
+        <span className="">{data.total} résultats</span>
+        <div className="ms-auto d-flex align-items-center cursor" onClick={e => goTo(e,"/offres")}>
           <span className="text-primary">Voir plus</span>
           <i className="bi bi-arrow-right ms-1"></i>
         </div>
       </div>
-      {[...Array(6).keys()].map((data) => {
+      {data?.data?.map((data) => {
         return (
           <div key={data}>
-            <JobCardComponent />
+            <JobCardComponent key={data.slug} data={data} />
           </div>
         );
       })}
-      <div className="d-flex justify-content-center mt-4">
-        <button type="button" className="btn btn-primary ">
-          Vour plus
-        </button>
-      </div>
     </div>
   );
 };

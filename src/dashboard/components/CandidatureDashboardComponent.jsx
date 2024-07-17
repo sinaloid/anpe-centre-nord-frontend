@@ -9,23 +9,28 @@ import request from "../../services/request";
 import ModalFormComponent from "../../components/ModalFormComponent";
 import InputField from "../../components/InputField";
 import ModalDeleteComponent from "../../components/ModalDeleteComponent";
+import useFunction from "../../hooks/useFunction";
+import ModalComponent from "../../components/ModalComponent";
 
 const initValue = {
-  label: "",
-  description: "",
+  etat: "",
 };
-const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
+const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) => {
   const closeFormRef = useRef();
   const closeDeleteRef = useRef();
-  const [datas, setDatas] = useState([]);
+  const {formatDate, truncateText} = useFunction()
+  const [datas, setDatas] = useState({});
   const [viewData, setViewData] = useState({});
+  
+
+  
+
+
+
   const validateData = Yup.object({
-    label: Yup.string().required(
+    etat: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
-    ),
-    description: Yup.string().required(
-      "Ce champ est obligatoire. Veuillez le remplir pour continuer"
-    ),
+    )
   });
 
   const formik = useFormik({
@@ -48,7 +53,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
   }, []);
 
   const get = () => {
-    toast.promise(request.get(endPoint.users + "/profile/" + type), {
+    toast.promise(request.get(endPoint.candidatures), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -74,7 +79,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
     });
   };
   const post = (values) => {
-    toast.promise(request.post(endPoint.offres, values), {
+    toast.promise(request.post(endPoint.posts, values), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -100,7 +105,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
     });
   };
   const update = (values) => {
-    toast.promise(request.post(endPoint.offres + "/" + values.slug, values), {
+    toast.promise(request.post(endPoint.candidatures + "/" + values.slug, values), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -127,7 +132,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
   };
 
   const destroy = () => {
-    toast.promise(request.delete(endPoint.offres + "/" + viewData.slug), {
+    toast.promise(request.delete(endPoint.posts + "/" + viewData.slug), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -153,10 +158,39 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
     });
   };
 
+  const getFile = (e, name) => {
+    e.preventDefault()
+    toast.promise(request.get(endPoint.candidatures+"/fichiers/"+name), {
+      pending: "Veuillez patienté...",
+      success: {
+        render({ data }) {
+          console.log(data);
+          const res = data.data;
+          setDatas(res.data);
+
+          return res.message;
+        },
+      },
+      error: {
+        render({ data }) {
+          console.log(data);
+          if (data.response.data.errors) {
+            return data.response.data.errors
+              ? data.response.data.errors
+              : data.response.data.error;
+          } else {
+            return data.response.data.message;
+          }
+        },
+      },
+    });
+  };
+
   const setEditData = (e, data) => {
     e.preventDefault();
     formik.setFieldValue("label", data.label);
     formik.setFieldValue("description", data.description);
+    formik.setFieldValue("etat", data.etat);
     formik.setFieldValue("slug", data.slug);
   };
   const setSelectedData = (e, data) => {
@@ -197,7 +231,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
               <div className="d-flex p-4">
                 <div>
                   <h5>Total</h5>
-                  <h3 className="fw-bold text-primary">{datas?.total}</h3>
+                  <h3 className="fw-bold text-primary">{datas.total}</h3>
                   <span className="text-muted"></span>
                 </div>
                 <div className="ms-auto">
@@ -223,68 +257,48 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
                 aria-describedby="basic-addon1"
               />
             </div>
-            {type === "ADMIN" && (
-              <button
-                className="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#form"
-                onClick={(e) => {
-                  e.preventDefault();
-                  formik.resetForm();
-                }}
-              >
-                Ajouter
-              </button>
-            )}
+            {/**
+             * <button
+              className="btn btn-primary"
+              data-bs-toggle="modal"
+              data-bs-target="#form"
+              onClick={(e) => {
+                e.preventDefault();
+                formik.resetForm();
+              }}
+            >
+              Ajouter
+            </button>
+             */}
           </div>
           <table className="table table-hover table-striped1 table-sm1 border-top">
             <thead className="bg-primary">
               <tr className="align-middle">
                 <th scope="col">#</th>
-                <th scope="col">Nom Prénom</th>
-                <th scope="col">Contact</th>
-                <th scope="col">Date de naissance</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Compte</th>
+                <th scope="col">Postulant</th>
+                <th scope="col">Offre</th>
+                <th scope="col">Etat</th>
+                <th scope="col">Date de candidature</th>
                 <th scope="col" className="text-center">
-                  Header
+                  Action
                 </th>
               </tr>
             </thead>
             <tbody className="aign-middle">
-              {datas.map((data, idx) => {
+              {datas?.data?.map((data, idx) => {
                 return (
                   <tr className="align-middle" key={idx}>
                     <td>{1 + idx}</td>
-                    <td>{data.nom + " " + data.prenom}</td>
-                    <td>
-                      <span>{data.email}</span> <br />
-                      <span>{data.telephone}</span>
-                    </td>
-                    <td>{data.date_de_naissance}</td>
-                    <td>{data.genre === "M" ? "Homme" : "Femme"}</td>
-                    <td>
-                      {data.is_blocked == 1 ? (
-                        <>
-                          <span className="badge text-bg-danger">
-                            Compte bloqué
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="badge text-bg-success">
-                            Compte actif
-                          </span>
-                        </>
-                      )}
-                    </td>
-
+                    <td>{data?.user_offre_candidature?.user?.nom +" "+data?.user_offre_candidature?.user?.prenom}</td>
+                    <td>{truncateText(data.label, 70)}</td>
+                    <td>{truncateText(data.etat, 70)}</td>
+                    <td>{formatDate(data.created_at)}</td>
                     <td className="text-center">
                       <div className="btn-group">
                         <button
                           className="btn btn-outline-primary rounded-2 me-1"
                           data-bs-toggle="modal"
-                          data-bs-target="#delete"
+                          data-bs-target="#view"
                           onClick={(e) => setSelectedData(e, data)}
                         >
                           <i className="bi bi-eye-fill"></i>
@@ -319,25 +333,20 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
         id={"form"}
         title={
           formik.values["slug"]
-            ? "Modification de l'emploi"
-            : "Ajout d'un emploi"
+            ? "Modification du statut de la candidature"
+            : "Ajout d'un post"
         }
         callback={formik.handleSubmit}
         closeRef={closeFormRef}
       >
+        
         <InputField
-          type="text"
-          name="label"
-          label={"Intitulé de l'emploi"}
+          type="select"
+          name="etat"
+          label={"Statut de la candidature"}
           formik={formik}
-          placeholder="Entrez l'intitulé de l'emploi"
-        />
-        <InputField
-          type="textaera"
-          name="description"
-          label="Description de l'emploi"
-          formik={formik}
-          placeholder="Entrez une courte description"
+          placeholder="Sélectionnez un status"
+          options={postType}
         />
       </ModalFormComponent>
       <ModalDeleteComponent
@@ -352,8 +361,26 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
           Voulez-vous continuer ?
         </div>
       </ModalDeleteComponent>
+      <ModalComponent
+      id={"view"}
+      title={"Informations"}
+      //callback={destroy}
+      size="modal-md"
+      noBtn={true}
+      closeRef={closeDeleteRef}
+      >
+        {
+          viewData.ressource_candidatures?.map((data, idx) => {
+
+            return <div className="d-flex mb-3 bg-gray rounded-2 px-2 py-1" key={"ressource"+idx}>
+              <div className="fw-bold">{data.original_name}</div>
+              <button className=" ms-auto btn btn-sm btn-outline-primary" onClick={e => getFile(e, data.name)}>Télécharger</button>
+            </div>
+          })
+        }
+      </ModalComponent>
     </>
   );
 };
 
-export default UserDashboardComponent;
+export default CandidatureDashboardComponent;

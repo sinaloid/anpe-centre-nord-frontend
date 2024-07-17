@@ -1,83 +1,83 @@
 const colors = {
     "A": {
-        "color": "#7BCB42",
-        "contrast": "#000000"
+        "color": "#172121",
+        "contrast": "#FFFFFF"
     },
     "B": {
-        "color": "#5931C3",
+        "color": "#444554",
         "contrast": "#FFFFFF"
     },
     "C": {
-        "color": "#D8A23F",
-        "contrast": "#000000"
-    },
-    "D": {
-        "color": "#BB1248",
+        "color": "#7F7B82",
         "contrast": "#FFFFFF"
     },
+    "D": {
+        "color": "#BFACB5",
+        "contrast": "#000000"
+    },
     "E": {
-        "color": "#48A8D1",
+        "color": "#E5D0CC",
         "contrast": "#000000"
     },
     "F": {
-        "color": "#A45A6C",
+        "color": "#1C77C3",
         "contrast": "#FFFFFF"
     },
     "G": {
-        "color": "#2ECC71",
-        "contrast": "#000000"
+        "color": "#39A9DB",
+        "contrast": "#FFFFFF"
     },
     "H": {
-        "color": "#FF5733",
+        "color": "#40BCD8",
         "contrast": "#FFFFFF"
     },
     "I": {
-        "color": "#8E44AD",
+        "color": "#F39237",
         "contrast": "#FFFFFF"
     },
     "J": {
-        "color": "#3498DB",
+        "color": "#D63230",
         "contrast": "#000000"
     },
     "K": {
-        "color": "#27AE60",
+        "color": "#E3E4DB",
         "contrast": "#000000"
     },
     "L": {
-        "color": "#E74C3C",
-        "contrast": "#FFFFFF"
+        "color": "#CDCDCD",
+        "contrast": "#000000"
     },
     "M": {
-        "color": "#9B59B6",
-        "contrast": "#FFFFFF"
+        "color": "#AEA4BF",
+        "contrast": "#000000"
     },
     "N": {
-        "color": "#1ABC9C",
-        "contrast": "#000000"
+        "color": "#8F6593",
+        "contrast": "#FFFFFF"
     },
     "O": {
-        "color": "#F39C12",
-        "contrast": "#000000"
+        "color": "#3B252C",
+        "contrast": "#FFFFFF"
     },
     "P": {
-        "color": "#D35400",
-        "contrast": "#FFFFFF"
+        "color": "#F7F0F5",
+        "contrast": "#000000"
     },
     "Q": {
-        "color": "#C0392B",
-        "contrast": "#FFFFFF"
+        "color": "#DECBB7",
+        "contrast": "#000000"
     },
     "R": {
-        "color": "#7F8C8D",
+        "color": "#8F857D",
         "contrast": "#FFFFFF"
     },
     "S": {
-        "color": "#2980B9",
-        "contrast": "#000000"
+        "color": "#5C5552",
+        "contrast": "#FFFFFF"
     },
     "T": {
-        "color": "#16A085",
-        "contrast": "#000000"
+        "color": "#433633",
+        "contrast": "#FFFFFF"
     },
     "U": {
         "color": "#2C3E50",
@@ -104,6 +104,7 @@ const colors = {
         "contrast": "#FFFFFF"
     }
 }
+
 
 
 export {

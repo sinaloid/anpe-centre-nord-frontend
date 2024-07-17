@@ -202,6 +202,10 @@ div > i:hover {
   height: 28px !important;
 }
 
+.break-word{
+  word-wrap: break-word; /* Supporte la coupure de mots longues */
+  word-break: break-all; /* Coupe le mot si nécessaire */
+}
 
 
 /******* swiper css ****/

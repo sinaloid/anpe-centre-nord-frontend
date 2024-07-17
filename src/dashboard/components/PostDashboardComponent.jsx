@@ -9,43 +9,37 @@ import request from "../../services/request";
 import ModalFormComponent from "../../components/ModalFormComponent";
 import InputField from "../../components/InputField";
 import ModalDeleteComponent from "../../components/ModalDeleteComponent";
+import useFunction from "../../hooks/useFunction";
 
 const initValue = {
   titre: "",
-  type: "",
+  categorie: "",
   description: "",
+  long_description: "",
 };
-const PostDashboardComponent = ({ type = "EMPLOI", title }) => {
+const PostDashboardComponent = ({ type = "ACTUALITE", title, postType}) => {
   const closeFormRef = useRef();
   const closeDeleteRef = useRef();
+  const {formatDate, truncateText} = useFunction()
   const [datas, setDatas] = useState([]);
   const [viewData, setViewData] = useState({});
-  const postType = [
-    {
-      slug:"EMPLOI",
-      label:"Emploi"
-    },
-    {
-      slug:"STAGE",
-      label:"Stage"
-    },
-    {
-      slug:"FORMATION",
-      label:"Formation"
-    },
-    {
-      slug:"PROJET",
-      label:"Projet"
-    }
-  ]
+  
+
+  
+
+
+
   const validateData = Yup.object({
     titre: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
     ),
-    type: Yup.string().required(
+    categorie: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
     ),
     description: Yup.string().required(
+      "Ce champ est obligatoire. Veuillez le remplir pour continuer"
+    ),
+    long_description: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
     ),
   });
@@ -70,7 +64,7 @@ const PostDashboardComponent = ({ type = "EMPLOI", title }) => {
   }, []);
 
   const get = () => {
-    toast.promise(request.get(endPoint.posts), {
+    toast.promise(request.get(endPoint.posts+"/type/"+type), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -178,7 +172,8 @@ const PostDashboardComponent = ({ type = "EMPLOI", title }) => {
   const setEditData = (e, data) => {
     e.preventDefault();
     formik.setFieldValue("titre", data.titre);
-    formik.setFieldValue("type", data.type);
+    formik.setFieldValue("categorie", data.categorie);
+    formik.setFieldValue("long_description", data.long_description);
     formik.setFieldValue("description", data.description);
     formik.setFieldValue("slug", data.slug);
   };
@@ -190,7 +185,8 @@ const PostDashboardComponent = ({ type = "EMPLOI", title }) => {
     <>
       <div className="d-flex mt-4 justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom1">
         <h1 className="h2">{title}</h1>
-        <div className="btn-toolbar mb-2 mb-md-0">
+        {/**
+         * <div className="btn-toolbar mb-2 mb-md-0">
           <div className="btn-group me-2">
             <button type="button" className="btn btn-sm btn-outline-primary">
               Share
@@ -209,30 +205,27 @@ const PostDashboardComponent = ({ type = "EMPLOI", title }) => {
             This week
           </button>
         </div>
+         */}
       </div>
 
       <div className="mb-3">
         <div className="row row-cols-1 row-cols-md-4">
-          {[...Array(4).keys()].map((data, idx) => {
-            return (
-              <div className="col mb-3" key={idx}>
-                <div className="card">
-                  <div className="d-flex p-4">
-                    <div>
-                      <span>Lorem ipsum</span>
-                      <div className="fw-bold">185000</div>
-                      <span className="text-muted">Lorem ipsum</span>
-                    </div>
-                    <div className="ms-auto">
-                      <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                        <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                      </span>
-                    </div>
-                  </div>
+        <div className="col mb-3">
+            <div className="card">
+              <div className="d-flex p-4">
+                <div>
+                  <h5>Total</h5>
+                  <h3 className="fw-bold text-primary">{datas.total}</h3>
+                  <span className="text-muted"></span>
+                </div>
+                <div className="ms-auto">
+                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                  </span>
                 </div>
               </div>
-            );
-          })}
+            </div>
+          </div>
         </div>
       </div>
 
@@ -265,23 +258,23 @@ const PostDashboardComponent = ({ type = "EMPLOI", title }) => {
               <tr className="align-middle">
                 <th scope="col">#</th>
                 <th scope="col">Titre</th>
-                <th scope="col">Type</th>
+                <th scope="col">Catégorie</th>
                 <th scope="col">Description</th>
-                <th scope="col">Date</th>
+                <th scope="col">Publier le</th>
                 <th scope="col" className="text-center">
-                  Header
+                  Action
                 </th>
               </tr>
             </thead>
             <tbody className="aign-middle">
-              {datas.map((data, idx) => {
+              {datas?.data?.map((data, idx) => {
                 return (
                   <tr className="align-middle" key={idx}>
                     <td>{1 + idx}</td>
                     <td>{data.titre}</td>
-                    <td>{data.type}</td>
-                    <td>{data.description}</td>
-                    <td>{data.created_at}</td>
+                    <td>{data.categorie}</td>
+                    <td>{truncateText(data.description, 70)}</td>
+                    <td>{formatDate(data.created_at)}</td>
                     <td className="text-center">
                       <div className="btn-group">
                         <button
@@ -337,18 +330,25 @@ const PostDashboardComponent = ({ type = "EMPLOI", title }) => {
         />
         <InputField
           type="select"
-          name="type"
-          label={"Catégorie du sujet"}
+          name="categorie"
+          label={"Catégorie"}
           formik={formik}
-          placeholder="Sélectionnez la catégorie du sujet"
+          placeholder="Sélectionnez la catégorie"
           options={postType}
         />
         <InputField
           type="textaera"
           name="description"
-          label="Description de l'emploi"
+          label="Courte description"
           formik={formik}
           placeholder="Entrez une courte description"
+        />
+        <InputField
+          type="textaera"
+          name="long_description"
+          label="Longue description"
+          formik={formik}
+          placeholder="Entrez une longue description"
         />
       </ModalFormComponent>
       <ModalDeleteComponent

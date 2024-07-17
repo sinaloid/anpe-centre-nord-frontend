@@ -1,8 +1,11 @@
+/* eslint-disable react/prop-types */
 import img from "../assets/images/anpe.jpeg";
+import useFunction from "../hooks/useFunction";
 
-const ConseilCardComponent = () => {
+const ConseilCardComponent = ({data}) => {
+  const {formatDate, truncateText, goTo} = useFunction()
   return (
-    <div className="card my-2">
+    <div className="card my-2" onClick={e => goTo(e,"/ressources-conseils/"+data.slug)}>
       <div className="card-body">
         <div>
           <div className="mb-2">
@@ -11,29 +14,28 @@ const ConseilCardComponent = () => {
           <div className="d-flex align-items-center">
             
             <div className="">
-              <h5 className="card-title fw-bold">{"Titre de la ressource"}</h5>
+              <h5 className="card-title fw-bold">{truncateText(data?.titre)}</h5>
               <p className="card-text text-muted">{"ANPE CENTRE NORD"}</p>
             </div>
           </div>
         </div>
         <div className="my-2">
-          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eveniet
-          aliquid harum labore, est in quibusdam corrupti earum inventore omnis,
-          reprehenderit delectus vero quasi dolorem suscipit optio. Recusandae
-          sed mollitia blanditiis.
+          {data?.description}
         </div>
-        <div className=" text-end my-1">
+        {/**
+         * <div className=" text-end my-1">
           <div className="d-flex">
             <span className="bg-gray-light py-1 px-2 rounded-2">Activités</span>
           </div>
         </div>
+         */}
         <div className="d-flex align-items-center justify-content-between">
-          <div className="text-primary d-flex align-items-center">
-            <i className="bi bi-chat-left-fill me-1"></i> 125 commentaires
+          <div className="text-primary d-flex align-items-center text-uppercase">
+            <i className="bi bi-globe me-1"></i> {data?.categorie}
           </div>
           <div className="text-primary  d-flex align-items-center">
             <i className="bi bi-clock-fill ms-auto me-1"></i>
-            {"il y'a 5 jours"}
+            {formatDate(data?.created_at)}
           </div>
         </div>
       </div>

@@ -14,6 +14,7 @@ const endPoint = {
     niveauxExperience:"niveaux-experience",
     villes:"villes",
     posts:"posts",
+    candidatures:"candidatures",
 
     
 }

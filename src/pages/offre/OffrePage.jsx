@@ -9,7 +9,7 @@ import endPoint from "../../services/endPoint";
 
 const OffrePage = () => {
   const {get} = useRequest(true)
-  const [datas,setDatas] = useState([])
+  const [datas,setDatas] = useState({})
 
   useEffect(() => {
     get("public/"+endPoint.offres,setDatas)
@@ -50,9 +50,9 @@ const OffrePage = () => {
             </div>
           </div>
           <div className="d-flex mt-3 mb-2">
-            <span className="">125 résultats</span>
+            <span className="">{datas?.total} résultats</span>
           </div>
-          {datas.map((data) => {
+          {datas?.data?.map((data) => {
         return (
           <div key={data.slug}>
             <JobCardComponent data={data} />

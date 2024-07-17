@@ -6,9 +6,9 @@ import FooterComponent from "./FooterComponent";
 // eslint-disable-next-line react/prop-types
 const ContainerComponent = ({ children, pageTitle="ANPE CENTRE NORD" }) => {
   let pathname = window.location.pathname;
-
   useEffect(() => {
     window.document.title = pageTitle;
+    window.scrollTo(0, 0);
   }, [pathname]);
   return (
     <div className="container-fluid">

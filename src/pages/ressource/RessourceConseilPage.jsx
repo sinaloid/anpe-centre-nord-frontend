@@ -1,10 +1,19 @@
+import { useEffect, useState } from "react";
 import AppMobileComponent from "../../components/AppMobileComponent";
 import ConseilCardComponent from "../../components/ConseilCardComponent";
 import ContainerComponent from "../../components/ContainerComponent";
 import RejoindreComponent from "../../components/RejoindreComponent";
 import SearchBarComponent from "../../components/SearchBarComponent";
+import useRequest from "../../hooks/useRequest";
+import endPoint from "../../services/endPoint";
 
 const RessourceConseilPage = () => {
+  const [data, setData] = useState({})
+  const {get} = useRequest()
+
+  useEffect(() => {
+    get("public/"+endPoint.posts+"/type/ACTUALITE", setData)
+  },[])
   return (
     <ContainerComponent>
       <div className="container">
@@ -42,14 +51,14 @@ const RessourceConseilPage = () => {
             </div>
           </div>
           <div className="d-flex mt-3 mb-2">
-            <span className="">125 résultats</span>
+            <span className="">{data.total} résultats</span>
           </div>
           <div className="col-12">
             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-              {[...Array(6).keys()].map((data) => {
+              {data?.data?.map((data) => {
                 return (
-                  <div className="col" key={data}>
-                    <ConseilCardComponent />
+                  <div className="col" key={data.slug}>
+                    <ConseilCardComponent data={data} />
                   </div>
                 );
               })}

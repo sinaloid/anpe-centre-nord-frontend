@@ -9,21 +9,37 @@ import request from "../../services/request";
 import ModalFormComponent from "../../components/ModalFormComponent";
 import InputField from "../../components/InputField";
 import ModalDeleteComponent from "../../components/ModalDeleteComponent";
+import useFunction from "../../hooks/useFunction";
 
 const initValue = {
-  label: "",
+  titre: "",
+  categorie: "",
   description: "",
+  long_description: "",
 };
-const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
+const PaiementDashboardComponent = ({ type = "PAIEMENT", title, postType}) => {
   const closeFormRef = useRef();
   const closeDeleteRef = useRef();
+  const {formatDate, truncateText} = useFunction()
   const [datas, setDatas] = useState([]);
   const [viewData, setViewData] = useState({});
+  
+
+  
+
+
+
   const validateData = Yup.object({
-    label: Yup.string().required(
+    titre: Yup.string().required(
+      "Ce champ est obligatoire. Veuillez le remplir pour continuer"
+    ),
+    categorie: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
     ),
     description: Yup.string().required(
+      "Ce champ est obligatoire. Veuillez le remplir pour continuer"
+    ),
+    long_description: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
     ),
   });
@@ -44,11 +60,11 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
   });
 
   useEffect(() => {
-    get();
+    //get();
   }, []);
 
   const get = () => {
-    toast.promise(request.get(endPoint.users + "/profile/" + type), {
+    toast.promise(request.get(endPoint.posts+"/type/"+type), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -74,7 +90,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
     });
   };
   const post = (values) => {
-    toast.promise(request.post(endPoint.offres, values), {
+    toast.promise(request.post(endPoint.posts, values), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -100,7 +116,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
     });
   };
   const update = (values) => {
-    toast.promise(request.post(endPoint.offres + "/" + values.slug, values), {
+    toast.promise(request.post(endPoint.posts + "/" + values.slug, values), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -127,7 +143,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
   };
 
   const destroy = () => {
-    toast.promise(request.delete(endPoint.offres + "/" + viewData.slug), {
+    toast.promise(request.delete(endPoint.posts + "/" + viewData.slug), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -155,7 +171,9 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
 
   const setEditData = (e, data) => {
     e.preventDefault();
-    formik.setFieldValue("label", data.label);
+    formik.setFieldValue("titre", data.titre);
+    formik.setFieldValue("categorie", data.categorie);
+    formik.setFieldValue("long_description", data.long_description);
     formik.setFieldValue("description", data.description);
     formik.setFieldValue("slug", data.slug);
   };
@@ -197,7 +215,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
               <div className="d-flex p-4">
                 <div>
                   <h5>Total</h5>
-                  <h3 className="fw-bold text-primary">{datas?.total}</h3>
+                  <h3 className="fw-bold text-primary">{datas.total}</h3>
                   <span className="text-muted"></span>
                 </div>
                 <div className="ms-auto">
@@ -223,62 +241,41 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
                 aria-describedby="basic-addon1"
               />
             </div>
-            {type === "ADMIN" && (
-              <button
-                className="btn btn-primary"
-                data-bs-toggle="modal"
-                data-bs-target="#form"
-                onClick={(e) => {
-                  e.preventDefault();
-                  formik.resetForm();
-                }}
-              >
-                Ajouter
-              </button>
-            )}
+            <button
+              className="btn btn-primary"
+              //data-bs-toggle="modal"
+              //data-bs-target="#form"
+              onClick={(e) => {
+                e.preventDefault();
+                formik.resetForm();
+              }}
+            >
+              Ajouter
+            </button>
           </div>
           <table className="table table-hover table-striped1 table-sm1 border-top">
             <thead className="bg-primary">
               <tr className="align-middle">
                 <th scope="col">#</th>
-                <th scope="col">Nom Prénom</th>
-                <th scope="col">Contact</th>
-                <th scope="col">Date de naissance</th>
-                <th scope="col">Genre</th>
-                <th scope="col">Compte</th>
+                <th scope="col">Id Transaction</th>
+                <th scope="col">Recruteur</th>
+                <th scope="col">Montant</th>
+                <th scope="col">Moyen de paiement</th>
+                <th scope="col">Date </th>
                 <th scope="col" className="text-center">
-                  Header
+                  Action
                 </th>
               </tr>
             </thead>
             <tbody className="aign-middle">
-              {datas.map((data, idx) => {
+              {datas?.data?.map((data, idx) => {
                 return (
                   <tr className="align-middle" key={idx}>
                     <td>{1 + idx}</td>
-                    <td>{data.nom + " " + data.prenom}</td>
-                    <td>
-                      <span>{data.email}</span> <br />
-                      <span>{data.telephone}</span>
-                    </td>
-                    <td>{data.date_de_naissance}</td>
-                    <td>{data.genre === "M" ? "Homme" : "Femme"}</td>
-                    <td>
-                      {data.is_blocked == 1 ? (
-                        <>
-                          <span className="badge text-bg-danger">
-                            Compte bloqué
-                          </span>
-                        </>
-                      ) : (
-                        <>
-                          <span className="badge text-bg-success">
-                            Compte actif
-                          </span>
-                        </>
-                      )}
-                    </td>
-
+                    <td>{data.titre}</td>
+                    <td>{data.categorie}</td>
+                    <td>{truncateText(data.description, 70)}</td>
+                    <td>{formatDate(data.created_at)}</td>
                     <td className="text-center">
                       <div className="btn-group">
                         <button
@@ -319,25 +316,40 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
         id={"form"}
         title={
           formik.values["slug"]
-            ? "Modification de l'emploi"
-            : "Ajout d'un emploi"
+            ? "Modification du post"
+            : "Ajout d'un post"
         }
         callback={formik.handleSubmit}
         closeRef={closeFormRef}
       >
         <InputField
           type="text"
-          name="label"
-          label={"Intitulé de l'emploi"}
+          name="titre"
+          label={"Titre du sujet"}
           formik={formik}
-          placeholder="Entrez l'intitulé de l'emploi"
+          placeholder="Entrez le titre du sujet"
+        />
+        <InputField
+          type="select"
+          name="categorie"
+          label={"Catégorie"}
+          formik={formik}
+          placeholder="Sélectionnez la catégorie"
+          options={postType}
         />
         <InputField
           type="textaera"
           name="description"
-          label="Description de l'emploi"
+          label="Courte description"
           formik={formik}
           placeholder="Entrez une courte description"
+        />
+        <InputField
+          type="textaera"
+          name="long_description"
+          label="Longue description"
+          formik={formik}
+          placeholder="Entrez une longue description"
         />
       </ModalFormComponent>
       <ModalDeleteComponent
@@ -356,4 +368,4 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
   );
 };
 
-export default UserDashboardComponent;
+export default PaiementDashboardComponent;

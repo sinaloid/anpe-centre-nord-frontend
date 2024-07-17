@@ -25,6 +25,8 @@ const initValue = {
   ville: "",
   longitude: "",
   latitude: "",
+  pieces_jointes: "",
+  piece_jointe: "",
   description: "",
 };
 const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
@@ -95,7 +97,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
           console.log(data);
           const res = data;
           closeFormRef.current.click();
-          setViewType("liste")
+          setViewType("liste");
           get();
           return res.data.message;
         },
@@ -122,7 +124,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
           console.log(data);
           const res = data;
           closeFormRef.current.click();
-          setViewType("liste")
+          setViewType("liste");
           get();
           return res.data.message;
         },
@@ -188,7 +190,7 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
 
     formik.setFieldValue("description", data.description);
     formik.setFieldValue("slug", data.slug);
-    setViewType("form")
+    setViewType("form");
   };
   const setSelectedData = (data) => {
     setViewData(data);
@@ -596,9 +598,28 @@ const DataView = ({ data, isFormik = false }) => {
   );
 };
 
-const DataForm = ({ formik, data}) => {
+const DataForm = ({ formik, data }) => {
+  const [piecesJointes, setPiecesJointes] = useState([]);
+
   const setDescription = (value) => {
     formik.setFieldValue("description", value);
+  };
+
+  const addPiece = (e) => {
+    e.preventDefault();
+    setPiecesJointes([...piecesJointes, formik.values.piece_jointe]);
+    formik.setFieldValue(
+      "pieces_jointes",
+      JSON.stringify([...piecesJointes, formik.values.piece_jointe])
+    );
+    formik.setFieldValue("piece_jointe", "");
+  };
+
+  const removePiece = (e, name) => {
+    e.preventDefault();
+    const pieces = piecesJointes.filter((data) => data !== name);
+    setPiecesJointes(pieces);
+    formik.setFieldValue("pieces_jointes", JSON.stringify(pieces));
   };
 
   return (
@@ -709,11 +730,46 @@ const DataForm = ({ formik, data}) => {
                 formik={formik}
                 placeholder="Entrez la latitude du lieu"
               />
+              <div className="d-flex flex-wrap align-items-center ">
+                <div className="w-75 me-2">
+                  <InputField
+                    type="text"
+                    name="piece_jointe"
+                    label={"Pièces jointes"}
+                    formik={formik}
+                    placeholder="Entrez le nom de la pièce jointe"
+                  />
+                </div>
+                <button
+                  className="btn btn-outline-primary mt-3"
+                  onClick={addPiece}
+                >
+                  Ajouter
+                </button>
+              </div>
+              <div className="d-flex flex-wrap mb-3">
+                {piecesJointes.map((data, idx) => {
+                  return (
+                    <div
+                      className="me-2 bg-gray mb-1 border px-2 fw-bold rounded-5"
+                      key={idx}
+                    >
+                      <span className="text-uppercase px-2">{data}</span>{" "}
+                      <span
+                        className="text-white bg-danger px-2 rounded-5 cursor"
+                        onClick={(e) => removePiece(e, data)}
+                      >
+                        x
+                      </span>
+                    </div>
+                  );
+                })}
+              </div>
             </div>
             <div className="col-12 bg-gray-light py-5 border rounded-3">
               <TextEditor
                 title={"Description de l'emploi"}
-                data ={data}
+                data={data}
                 setValue={setDescription}
               />
             </div>

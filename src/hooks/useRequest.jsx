@@ -9,7 +9,7 @@ const useRequest = () => {
         render({ data }) {
           console.log(data);
           const res = data.data;
-          setDatas(res.data.data);
+          setDatas(res.data);
 
           return res.message;
         },
@@ -17,12 +17,12 @@ const useRequest = () => {
       error: {
         render({ data }) {
           console.log(data);
-          if (data.response.data.errors) {
+          if (data.response?.data?.errors) {
             return data.response.data.errors
               ? data.response.data.errors
               : data.response.data.error;
           } else {
-            return data.response.data.message;
+            return data.response?.data?.message;
           }
         },
       },

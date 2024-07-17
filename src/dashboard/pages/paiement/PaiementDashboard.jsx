@@ -1,6 +1,6 @@
-import PostDashboardComponent from "../../components/PostDashboardComponent";
+import PaiementDashboardComponent from "../../components/PaiementDashboardComponent";
 
-const ActualiteDashboard = () => {
+const PaiementDashboard = () => {
   const postType = [
     {
       slug:"Activités",
@@ -22,9 +22,9 @@ const ActualiteDashboard = () => {
   
   return (
     <>
-      <PostDashboardComponent title={"Liste des actualités"} type="ACTUALITE" postType={postType} />
+      <PaiementDashboardComponent title={"Liste des paiements"} type="PAIEMENT" postType={postType} />
     </>
   );
 };
 
-export default ActualiteDashboard;
+export default PaiementDashboard;

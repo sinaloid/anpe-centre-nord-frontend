@@ -17,7 +17,7 @@ const SearchBarComponent = () => {
       </div>
       <div className="col-auto">
         <button type="submit" className="btn btn-primary mb-3">
-        <i className="bi bi-filter"></i>Filtrer
+        {/**<i className="bi bi-search"></i> */} Rechercher
         </button>
       </div>
     </form>

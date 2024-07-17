@@ -13,7 +13,9 @@ import PostulantDashboard from "./pages/postulant/PostulantDashboard";
 import RecruteurDashboard from "./pages/recruteur/RecruteurDashboard";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import ActualiteDashboard from "./pages/actualite/ActualiteDashboard";
-import ForumDashboard from "./pages/forum/ForumDashboard";
+import RessourceDashboard from "./pages/ressource/RessourceDashboard";
+import PaiementDashboard from "./pages/paiement/PaiementDashboard";
+import CandidatureDashboard from "./pages/candidature/CandidatureDashboard";
 
 const Dashboard = () => {
   const authCtx = useContext(AppContext);
@@ -42,9 +44,9 @@ const Dashboard = () => {
   };
 
   const goBack = (e) => {
-    e.preventDefault()
-    navigate(-1)
-  }
+    e.preventDefault();
+    navigate(-1);
+  };
 
   return (
     <>
@@ -272,7 +274,7 @@ const Dashboard = () => {
                   </li>
                 </ul>
                 <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-body-secondary text-uppercase">
-                  <span>Actualités & Forum</span>
+                  <span>Actualités & Ressources</span>
                 </h6>
                 <ul className="nav flex-column mb-auto">
                   <li className="nav-item">
@@ -289,50 +291,41 @@ const Dashboard = () => {
                   <li className="nav-item">
                     <NavLink
                       className="nav-link d-flex align-items-center gap-2"
-                      to="forum"
+                      to="ressources"
                     >
                       <svg className="bi bi-dash">
                         <use xlinkHref="#puzzle" />
                       </svg>
-                      Forum
+                      Ressources
                     </NavLink>
                   </li>
                 </ul>
 
                 <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-body-secondary text-uppercase">
                   <span>Gestion</span>
-                  <a
-                    className="link-secondary"
-                    href="#"
-                    aria-label="Add a new report"
-                  >
-                    <svg className="bi bi-dash">
-                      <use xlinkHref="#plus-circle" />
-                    </svg>
-                  </a>
                 </h6>
                 <ul className="nav flex-column mb-auto">
                   <li className="nav-item">
-                    <a
+                    <NavLink
                       className="nav-link d-flex align-items-center gap-2"
-                      href="#"
+                      to="paiements"
                     >
                       <svg className="bi bi-dash">
                         <use xlinkHref="#file-earmark-text" />
                       </svg>
-                      Messages
-                    </a>
+                      Paiements
+                    </NavLink>
                   </li>
                   <li className="nav-item">
-                    <a
+                    <NavLink
                       className="nav-link d-flex align-items-center gap-2"
-                      href="#"
+                      to="candidatures"
                     >
                       <svg className="bi bi-dash">
                         <use xlinkHref="#file-earmark-text" />
                       </svg>
                       Candidatures
-                    </a>
+                    </NavLink>
                   </li>
                 </ul>
                 <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-body-secondary text-uppercase">
@@ -377,7 +370,8 @@ const Dashboard = () => {
                 <hr className="my-3" />
 
                 <ul className="nav flex-column mb-auto">
-                  <li className="nav-item">
+                  {/**
+                   * <li className="nav-item">
                     <a
                       className="nav-link d-flex align-items-center gap-2"
                       href="#"
@@ -388,6 +382,7 @@ const Dashboard = () => {
                       Paramètres
                     </a>
                   </li>
+                   */}
                   <li className="nav-item">
                     <div
                       className="nav-link d-flex align-items-center gap-2"
@@ -406,7 +401,7 @@ const Dashboard = () => {
 
           <main className="col-md-9 ms-sm-auto col-lg-10 px-md-4 bg-body-tertiary">
             <div className="d-iniline-block my-2" onClick={goBack}>
-            <i className="bi bi-chevron-left"></i>
+              <i className="bi bi-chevron-left"></i>
               <span className="fw-bold cursor">Retour</span>
             </div>
             <Routes>
@@ -419,7 +414,9 @@ const Dashboard = () => {
               <Route path="/recruteurs" element={<RecruteurDashboard />} />
               <Route path="/administration/*" element={<AdminDashboard />} />
               <Route path="/actualites" element={<ActualiteDashboard />} />
-              <Route path="/forum" element={<ForumDashboard />} />
+              <Route path="/ressources" element={<RessourceDashboard />} />
+              <Route path="/paiements" element={<PaiementDashboard />} />
+              <Route path="/candidatures" element={<CandidatureDashboard />} />
             </Routes>
           </main>
         </div>

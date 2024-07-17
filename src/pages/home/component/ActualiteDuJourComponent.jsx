@@ -1,6 +1,17 @@
+import { useEffect, useState } from "react";
 import ActualiteCardComponent from "../../../components/ActualiteCardComponent";
+import useRequest from "../../../hooks/useRequest";
+import useFunction from "../../../hooks/useFunction";
+import endPoint from "../../../services/endPoint";
 
 const ActualiteDuJourComponent = () => {
+  const [data,setData] = useState({})
+  const {get} = useRequest()
+  const {goTo} = useFunction()
+
+  useEffect(() => {
+    get("public/"+endPoint.posts+"/type/ACTUALITE",setData)
+  },[])
   return (
     <div className="row my-5 py-2">
       <div className="col-12 text-center">
@@ -31,28 +42,23 @@ const ActualiteDuJourComponent = () => {
         </div>
       </div>
       <div className="d-flex mt-2 mb-2">
-        <span className="">125 résultats</span>
-        <div className="ms-auto d-flex align-items-center">
+        <span className="">{data.total} résultats</span>
+        <div className="ms-auto d-flex align-items-center cursor" onClick={e => goTo(e,"/actualites")}>
           <span className="text-primary">Voir plus</span>
           <i className="bi bi-arrow-right ms-1"></i>
         </div>
       </div>
       <div className="col-12">
         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3">
-          {[...Array(6).keys()].map((data) => {
+          {data?.data?.map((data) => {
             return (
-              <div className="col" key={data}>
-                <ActualiteCardComponent />
+              <div className="col" key={data.slug}>
+                <ActualiteCardComponent data={data} />
               </div>
             );
           })}
         </div>
       </div>
-      <div className="col-12 d-flex justify-content-center mt-4">
-            <button type="button" className="btn btn-primary my-2">
-              Vour plus
-            </button>
-          </div>
     </div>
   );
 };
