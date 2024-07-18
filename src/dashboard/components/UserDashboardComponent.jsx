@@ -371,14 +371,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
           formik={formik}
           placeholder="Mot de passe"
         />
-        
-        <InputField
-          type="textaera"
-          name="description"
-          label="Description de l'emploi"
-          formik={formik}
-          placeholder="Entrez une courte description"
-        />
+    
       </ModalFormComponent>
       <ModalDeleteComponent
         id={"delete"}
