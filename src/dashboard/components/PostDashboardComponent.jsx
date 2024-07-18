@@ -3,13 +3,14 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import endPoint from "../../services/endPoint";
 import request from "../../services/request";
 import ModalFormComponent from "../../components/ModalFormComponent";
 import InputField from "../../components/InputField";
 import ModalDeleteComponent from "../../components/ModalDeleteComponent";
 import useFunction from "../../hooks/useFunction";
+import { AppContext } from "../../services/context";
 
 const initValue = {
   titre: "",
@@ -17,17 +18,18 @@ const initValue = {
   description: "",
   long_description: "",
 };
-const PostDashboardComponent = ({ type = "ACTUALITE", title, postType}) => {
+const PostDashboardComponent = ({ type = "ACTUALITE", title, postType }) => {
+  const authCtx = useContext(AppContext);
+  const { user, onUserChange } = authCtx;
   const closeFormRef = useRef();
   const closeDeleteRef = useRef();
-  const {formatDate, truncateText} = useFunction()
+  const { formatDate, truncateText, goTo } = useFunction();
   const [datas, setDatas] = useState([]);
   const [viewData, setViewData] = useState({});
-  
-
-  
-
-
+  const link = {
+    ACTUALITE: "actualites",
+    RESSOURCE: "ressources-conseils",
+  };
 
   const validateData = Yup.object({
     titre: Yup.string().required(
@@ -64,7 +66,7 @@ const PostDashboardComponent = ({ type = "ACTUALITE", title, postType}) => {
   }, []);
 
   const get = () => {
-    toast.promise(request.get(endPoint.posts+"/type/"+type), {
+    toast.promise(request.get(endPoint.posts + "/type/" + type), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -208,26 +210,31 @@ const PostDashboardComponent = ({ type = "ACTUALITE", title, postType}) => {
          */}
       </div>
 
-      <div className="mb-3">
-        <div className="row row-cols-1 row-cols-md-4">
-        <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>Total</h5>
-                  <h3 className="fw-bold text-primary">{datas.total}</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
+      {user.profile === "ADMIN" ||
+        (user.profile === "SUPER_ADMIN" && (
+          <>
+            <div className="mb-3">
+              <div className="row row-cols-1 row-cols-md-4">
+                <div className="col mb-3">
+                  <div className="card">
+                    <div className="d-flex p-4">
+                      <div>
+                        <h5>Total</h5>
+                        <h3 className="fw-bold text-primary">{datas.total}</h3>
+                        <span className="text-muted"></span>
+                      </div>
+                      <div className="ms-auto">
+                        <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                          <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </>
+        ))}
 
       <div className="card p-4 mt-3">
         <div className="table-responsive small">
@@ -241,17 +248,23 @@ const PostDashboardComponent = ({ type = "ACTUALITE", title, postType}) => {
                 aria-describedby="basic-addon1"
               />
             </div>
-            <button
-              className="btn btn-primary"
-              data-bs-toggle="modal"
-              data-bs-target="#form"
-              onClick={(e) => {
-                e.preventDefault();
-                formik.resetForm();
-              }}
-            >
-              Ajouter
-            </button>
+
+            {user.profile === "ADMIN" ||
+              (user.profile === "SUPER_ADMIN" && (
+                <>
+                  <button
+                    className="btn btn-primary"
+                    data-bs-toggle="modal"
+                    data-bs-target="#form"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      formik.resetForm();
+                    }}
+                  >
+                    Ajouter
+                  </button>
+                </>
+              ))}
           </div>
           <table className="table table-hover table-striped1 table-sm1 border-top">
             <thead className="bg-primary">
@@ -279,28 +292,33 @@ const PostDashboardComponent = ({ type = "ACTUALITE", title, postType}) => {
                       <div className="btn-group">
                         <button
                           className="btn btn-outline-primary rounded-2 me-1"
-                          data-bs-toggle="modal"
-                          data-bs-target="#delete"
-                          onClick={(e) => setSelectedData(e, data)}
+                          onClick={(e) =>
+                            goTo(e, "/" + link[type] + "/" + data.slug)
+                          }
                         >
                           <i className="bi bi-eye-fill"></i>
                         </button>
-                        <button
-                          className="btn btn-outline-danger rounded-2 mx-1"
-                          data-bs-toggle="modal"
-                          data-bs-target="#form"
-                          onClick={(e) => setEditData(e, data)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn btn-danger rounded-2 ms-1"
-                          data-bs-toggle="modal"
-                          data-bs-target="#delete"
-                          onClick={(e) => setSelectedData(e, data)}
-                        >
-                          <i className="bi bi-trash-fill"></i>
-                        </button>
+                        {user.profile === "ADMIN" ||
+                          (user.profile === "SUPER_ADMIN" && (
+                            <>
+                              <button
+                                className="btn btn-outline-danger rounded-2 mx-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#form"
+                                onClick={(e) => setEditData(e, data)}
+                              >
+                                <i className="bi bi-pencil-square"></i>
+                              </button>
+                              <button
+                                className="btn btn-danger rounded-2 ms-1"
+                                data-bs-toggle="modal"
+                                data-bs-target="#delete"
+                                onClick={(e) => setSelectedData(e, data)}
+                              >
+                                <i className="bi bi-trash-fill"></i>
+                              </button>
+                            </>
+                          ))}
                       </div>
                     </td>
                   </tr>
@@ -314,9 +332,7 @@ const PostDashboardComponent = ({ type = "ACTUALITE", title, postType}) => {
       <ModalFormComponent
         id={"form"}
         title={
-          formik.values["slug"]
-            ? "Modification du post"
-            : "Ajout d'un post"
+          formik.values["slug"] ? "Modification du post" : "Ajout d'un post"
         }
         callback={formik.handleSubmit}
         closeRef={closeFormRef}

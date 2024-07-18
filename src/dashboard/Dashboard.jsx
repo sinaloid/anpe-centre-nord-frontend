@@ -1,7 +1,13 @@
 import { useContext, useEffect } from "react";
 import { IconSvg } from "./components/IconSvg";
 import "./dashboard.css";
-import { NavLink, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  NavLink,
+  Route,
+  Routes,
+  useNavigate,
+  Navigate,
+} from "react-router-dom";
 import { AppContext, initialUser } from "../services/context";
 import { deleteUser } from "../services/storage";
 import HomeDashboard from "./pages/home/HomeDashboard";
@@ -212,17 +218,22 @@ const Dashboard = () => {
                   </a>
                 </div>
                 <ul className="nav flex-column">
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link d-flex align-items-center gap-2"
-                      to="accueil"
-                    >
-                      <svg className="bi bi-dash">
-                        <use xlinkHref="#house-fill" />
-                      </svg>
-                      Accueil
-                    </NavLink>
-                  </li>
+                  {(user.profile === "ADMIN" ||
+                    user.profile === "SUPER_ADMIN") && (
+                    <>
+                      <li className="nav-item">
+                        <NavLink
+                          className="nav-link d-flex align-items-center gap-2"
+                          to="accueil"
+                        >
+                          <svg className="bi bi-dash">
+                            <use xlinkHref="#house-fill" />
+                          </svg>
+                          Accueil
+                        </NavLink>
+                      </li>
+                    </>
+                  )}
                 </ul>
                 <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-body-secondary text-uppercase">
                   <span>Offres</span>
@@ -305,17 +316,23 @@ const Dashboard = () => {
                   <span>Gestion</span>
                 </h6>
                 <ul className="nav flex-column mb-auto">
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link d-flex align-items-center gap-2"
-                      to="paiements"
-                    >
-                      <svg className="bi bi-dash">
-                        <use xlinkHref="#file-earmark-text" />
-                      </svg>
-                      Paiements
-                    </NavLink>
-                  </li>
+                  {(user.profile === "ADMIN" ||
+                    user.profile === "SUPER_ADMIN" ||
+                    user.profile === "RECRUTEUR") && (
+                    <>
+                      <li className="nav-item">
+                        <NavLink
+                          className="nav-link d-flex align-items-center gap-2"
+                          to="paiements"
+                        >
+                          <svg className="bi bi-dash">
+                            <use xlinkHref="#file-earmark-text" />
+                          </svg>
+                          Paiements
+                        </NavLink>
+                      </li>
+                    </>
+                  )}
                   <li className="nav-item">
                     <NavLink
                       className="nav-link d-flex align-items-center gap-2"
@@ -328,44 +345,49 @@ const Dashboard = () => {
                     </NavLink>
                   </li>
                 </ul>
-                <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-body-secondary text-uppercase">
-                  <span>Utilisateurs</span>
-                </h6>
-                <ul className="nav flex-column mb-auto">
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link d-flex align-items-center gap-2"
-                      to="postulants"
-                    >
-                      <svg className="bi bi-dash">
-                        <use xlinkHref="#people" />
-                      </svg>
-                      Postulants
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link d-flex align-items-center gap-2"
-                      to="recruteurs"
-                    >
-                      <svg className="bi bi-dash">
-                        <use xlinkHref="#people" />
-                      </svg>
-                      Recruteurs
-                    </NavLink>
-                  </li>
-                  <li className="nav-item">
-                    <NavLink
-                      className="nav-link d-flex align-items-center gap-2"
-                      to="administration"
-                    >
-                      <svg className="bi bi-dash">
-                        <use xlinkHref="#people" />
-                      </svg>
-                      Administration
-                    </NavLink>
-                  </li>
-                </ul>
+                {(user.profile === "ADMIN" ||
+                  user.profile === "SUPER_ADMIN") && (
+                  <>
+                    <h6 className="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-body-secondary text-uppercase">
+                      <span>Utilisateurs</span>
+                    </h6>
+                    <ul className="nav flex-column mb-auto">
+                      <li className="nav-item">
+                        <NavLink
+                          className="nav-link d-flex align-items-center gap-2"
+                          to="postulants"
+                        >
+                          <svg className="bi bi-dash">
+                            <use xlinkHref="#people" />
+                          </svg>
+                          Postulants
+                        </NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink
+                          className="nav-link d-flex align-items-center gap-2"
+                          to="recruteurs"
+                        >
+                          <svg className="bi bi-dash">
+                            <use xlinkHref="#people" />
+                          </svg>
+                          Recruteurs
+                        </NavLink>
+                      </li>
+                      <li className="nav-item">
+                        <NavLink
+                          className="nav-link d-flex align-items-center gap-2"
+                          to="administration"
+                        >
+                          <svg className="bi bi-dash">
+                            <use xlinkHref="#people" />
+                          </svg>
+                          Administration
+                        </NavLink>
+                      </li>
+                    </ul>
+                  </>
+                )}
 
                 <hr className="my-3" />
 
@@ -405,18 +427,35 @@ const Dashboard = () => {
               <span className="fw-bold cursor">Retour</span>
             </div>
             <Routes>
-              <Route path="/accueil" element={<HomeDashboard />} />
+              {(user.profile === "ADMIN" || user.profile === "SUPER_ADMIN") && (
+                <>
+                  <Route path="/accueil" element={<HomeDashboard />} />
+                  <Route path="/postulants" element={<PostulantDashboard />} />
+                  <Route path="/recruteurs" element={<RecruteurDashboard />} />
+                  <Route
+                    path="/administration/*"
+                    element={<AdminDashboard />}
+                  />
+                </>
+              )}
               <Route path="/emplois" element={<EmploiDashboard />} />
               <Route path="/stages" element={<StageDashboard />} />
               <Route path="/formations" element={<FormationDashboard />} />
               <Route path="/projets" element={<ProjetDashboard />} />
-              <Route path="/postulants" element={<PostulantDashboard />} />
-              <Route path="/recruteurs" element={<RecruteurDashboard />} />
-              <Route path="/administration/*" element={<AdminDashboard />} />
+
               <Route path="/actualites" element={<ActualiteDashboard />} />
               <Route path="/ressources" element={<RessourceDashboard />} />
               <Route path="/paiements" element={<PaiementDashboard />} />
               <Route path="/candidatures" element={<CandidatureDashboard />} />
+              {user.profile === "POSTULANT" ||
+                (user.profile === "RECRUTEUR" && (
+                  <>
+                    <Route
+                      path="/dashboard/accueil"
+                      element={<Navigate replace to="/dashboard/emplois" />}
+                    />
+                  </>
+                ))}
             </Routes>
           </main>
         </div>

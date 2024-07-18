@@ -3,7 +3,7 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import endPoint from "../../services/endPoint";
 import request from "../../services/request";
 import ModalFormComponent from "../../components/ModalFormComponent";
@@ -11,26 +11,28 @@ import InputField from "../../components/InputField";
 import ModalDeleteComponent from "../../components/ModalDeleteComponent";
 import useFunction from "../../hooks/useFunction";
 import ModalComponent from "../../components/ModalComponent";
+import { AppContext } from "../../services/context";
 
 const initValue = {
   etat: "",
 };
-const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) => {
+const CandidatureDashboardComponent = ({
+  type = "PAIEMENT",
+  title,
+  postType,
+}) => {
+  const authCtx = useContext(AppContext);
+  const { user, onUserChange } = authCtx;
   const closeFormRef = useRef();
   const closeDeleteRef = useRef();
-  const {formatDate, truncateText} = useFunction()
+  const { formatDate, truncateText } = useFunction();
   const [datas, setDatas] = useState({});
   const [viewData, setViewData] = useState({});
-  
-
-  
-
-
 
   const validateData = Yup.object({
     etat: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
-    )
+    ),
   });
 
   const formik = useFormik({
@@ -105,30 +107,33 @@ const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) =>
     });
   };
   const update = (values) => {
-    toast.promise(request.post(endPoint.candidatures + "/" + values.slug, values), {
-      pending: "Veuillez patienté...",
-      success: {
-        render({ data }) {
-          console.log(data);
-          const res = data;
-          closeFormRef.current.click();
-          get();
-          return res.data.message;
+    toast.promise(
+      request.post(endPoint.candidatures + "/" + values.slug, values),
+      {
+        pending: "Veuillez patienté...",
+        success: {
+          render({ data }) {
+            console.log(data);
+            const res = data;
+            closeFormRef.current.click();
+            get();
+            return res.data.message;
+          },
         },
-      },
-      error: {
-        render({ data }) {
-          console.log(data);
-          if (data.response.data.errors) {
-            return data.response.data.errors
-              ? data.response.data.errors
-              : data.response.data.error;
-          } else {
-            return data.response.data.message;
-          }
+        error: {
+          render({ data }) {
+            console.log(data);
+            if (data.response.data.errors) {
+              return data.response.data.errors
+                ? data.response.data.errors
+                : data.response.data.error;
+            } else {
+              return data.response.data.message;
+            }
+          },
         },
-      },
-    });
+      }
+    );
   };
 
   const destroy = () => {
@@ -159,8 +164,8 @@ const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) =>
   };
 
   const getFile = (e, name) => {
-    e.preventDefault()
-    toast.promise(request.get(endPoint.candidatures+"/fichiers/"+name), {
+    e.preventDefault();
+    toast.promise(request.get(endPoint.candidatures + "/fichiers/" + name), {
       pending: "Veuillez patienté...",
       success: {
         render({ data }) {
@@ -224,26 +229,31 @@ const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) =>
          */}
       </div>
 
-      <div className="mb-3">
-        <div className="row row-cols-1 row-cols-md-4">
-        <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>Total</h5>
-                  <h3 className="fw-bold text-primary">{datas.total}</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
+      {user.profile === "ADMIN" ||
+        (user.profile === "SUPER_ADMIN" && (
+          <>
+            <div className="mb-3">
+              <div className="row row-cols-1 row-cols-md-4">
+                <div className="col mb-3">
+                  <div className="card">
+                    <div className="d-flex p-4">
+                      <div>
+                        <h5>Total</h5>
+                        <h3 className="fw-bold text-primary">{datas.total}</h3>
+                        <span className="text-muted"></span>
+                      </div>
+                      <div className="ms-auto">
+                        <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                          <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
-      </div>
+          </>
+        ))}
 
       <div className="card p-4 mt-3">
         <div className="table-responsive small">
@@ -286,10 +296,22 @@ const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) =>
             </thead>
             <tbody className="aign-middle">
               {datas?.data?.map((data, idx) => {
+                if (
+                  user.profile !== "ADMIN" &&
+                  user.profile !== "SUPER_ADMIN"
+                ) {
+                  if (user.slug !== data?.user_offre_candidature?.user?.slug) {
+                    return null;
+                  }
+                }
                 return (
                   <tr className="align-middle" key={idx}>
                     <td>{1 + idx}</td>
-                    <td>{data?.user_offre_candidature?.user?.nom +" "+data?.user_offre_candidature?.user?.prenom}</td>
+                    <td>
+                      {data?.user_offre_candidature?.user?.nom +
+                        " " +
+                        data?.user_offre_candidature?.user?.prenom}
+                    </td>
                     <td>{truncateText(data.label, 70)}</td>
                     <td>{truncateText(data.etat, 70)}</td>
                     <td>{formatDate(data.created_at)}</td>
@@ -303,22 +325,27 @@ const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) =>
                         >
                           <i className="bi bi-eye-fill"></i>
                         </button>
-                        <button
-                          className="btn btn-outline-danger rounded-2 mx-1"
-                          data-bs-toggle="modal"
-                          data-bs-target="#form"
-                          onClick={(e) => setEditData(e, data)}
-                        >
-                          <i className="bi bi-pencil-square"></i>
-                        </button>
-                        <button
-                          className="btn btn-danger rounded-2 ms-1"
-                          data-bs-toggle="modal"
-                          data-bs-target="#delete"
-                          onClick={(e) => setSelectedData(e, data)}
-                        >
-                          <i className="bi bi-trash-fill"></i>
-                        </button>
+                        {(user.profile === "ADMIN" ||
+                          user.profile === "SUPER_ADMIN") && (
+                          <>
+                            <button
+                              className="btn btn-outline-danger rounded-2 mx-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#form"
+                              onClick={(e) => setEditData(e, data)}
+                            >
+                              <i className="bi bi-pencil-square"></i>
+                            </button>
+                            <button
+                              className="btn btn-danger rounded-2 ms-1"
+                              data-bs-toggle="modal"
+                              data-bs-target="#delete"
+                              onClick={(e) => setSelectedData(e, data)}
+                            >
+                              <i className="bi bi-trash-fill"></i>
+                            </button>
+                          </>
+                        )}
                       </div>
                     </td>
                   </tr>
@@ -339,7 +366,6 @@ const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) =>
         callback={formik.handleSubmit}
         closeRef={closeFormRef}
       >
-        
         <InputField
           type="select"
           name="etat"
@@ -362,22 +388,29 @@ const CandidatureDashboardComponent = ({ type = "PAIEMENT", title, postType}) =>
         </div>
       </ModalDeleteComponent>
       <ModalComponent
-      id={"view"}
-      title={"Informations"}
-      //callback={destroy}
-      size="modal-md"
-      noBtn={true}
-      closeRef={closeDeleteRef}
+        id={"view"}
+        title={"Informations"}
+        //callback={destroy}
+        size="modal-md"
+        noBtn={true}
+        closeRef={closeDeleteRef}
       >
-        {
-          viewData.ressource_candidatures?.map((data, idx) => {
-
-            return <div className="d-flex mb-3 bg-gray rounded-2 px-2 py-1" key={"ressource"+idx}>
+        {viewData.ressource_candidatures?.map((data, idx) => {
+          return (
+            <div
+              className="d-flex mb-3 bg-gray rounded-2 px-2 py-1"
+              key={"ressource" + idx}
+            >
               <div className="fw-bold">{data.original_name}</div>
-              <button className=" ms-auto btn btn-sm btn-outline-primary" onClick={e => getFile(e, data.name)}>Télécharger</button>
+              <button
+                className=" ms-auto btn btn-sm btn-outline-primary"
+                onClick={(e) => getFile(e, data.name)}
+              >
+                Télécharger
+              </button>
             </div>
-          })
-        }
+          );
+        })}
       </ModalComponent>
     </>
   );

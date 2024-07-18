@@ -3,13 +3,15 @@
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import { toast } from "react-toastify";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import endPoint from "../../services/endPoint";
 import request from "../../services/request";
 import ModalFormComponent from "../../components/ModalFormComponent";
 import InputField from "../../components/InputField";
 import ModalDeleteComponent from "../../components/ModalDeleteComponent";
 import TextEditor from "../../components/TextEditor";
+import { AppContext } from "../../services/context";
+import useFunction from "../../hooks/useFunction";
 
 const initValue = {
   label: "",
@@ -30,11 +32,14 @@ const initValue = {
   description: "",
 };
 const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
+  const authCtx = useContext(AppContext);
+  const { user } = authCtx;
   const closeFormRef = useRef();
   const closeDeleteRef = useRef();
   const [datas, setDatas] = useState([]);
   const [viewData, setViewData] = useState({});
   const [viewType, setViewType] = useState("liste");
+  const { goTo } = useFunction();
   const validateData = Yup.object({
     label: Yup.string().required(
       "Ce champ est obligatoire. Veuillez le remplir pour continuer"
@@ -223,94 +228,79 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
          */}
       </div>
 
-      <div className="mb-3">
-        <div className="row row-cols-1 row-cols-md-4">
-          <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>En cours</h5>
-                  <h3 className="fw-bold text-primary">0</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>En attente de validation</h5>
-                  <h3 className="fw-bold text-primary">0</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>Expirés</h5>
-                  <h3 className="fw-bold text-primary">0</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col mb-3">
-            <div className="card">
-              <div className="d-flex p-4">
-                <div>
-                  <h5>Total</h5>
-                  <h3 className="fw-bold text-primary">{datas.length}</h3>
-                  <span className="text-muted"></span>
-                </div>
-                <div className="ms-auto">
-                  <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                    <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-          {/*[...Array(4).keys()].map((data, idx) => {
-            return (
-              <div className="col mb-3" key={idx}>
-                <div className="card">
-                  <div className="d-flex p-4">
-                    <div>
-                      <span>Lorem ipsum</span>
-                      <div className="fw-bold">185000</div>
-                      <span className="text-muted">Lorem ipsum</span>
+      {user.profile === "ADMIN" ||
+        (user.profile === "SUPER_ADMIN" && (
+          <>
+            <div className="mb-3">
+              <div className="row row-cols-1 row-cols-md-4">
+                <div className="col mb-3">
+                  <div className="card">
+                    <div className="d-flex p-4">
+                      <div>
+                        <h5>En cours</h5>
+                        <h3 className="fw-bold text-primary">0</h3>
+                        <span className="text-muted"></span>
+                      </div>
+                      <div className="ms-auto">
+                        <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                          <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                        </span>
+                      </div>
                     </div>
-                    <div className="ms-auto">
-                      <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
-                        <i className="bi bi-briefcase-fill text-primary fs-2"></i>
-                      </span>
+                  </div>
+                </div>
+                <div className="col mb-3">
+                  <div className="card">
+                    <div className="d-flex p-4">
+                      <div>
+                        <h5>En attente de validation</h5>
+                        <h3 className="fw-bold text-primary">0</h3>
+                        <span className="text-muted"></span>
+                      </div>
+                      <div className="ms-auto">
+                        <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                          <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col mb-3">
+                  <div className="card">
+                    <div className="d-flex p-4">
+                      <div>
+                        <h5>Expirés</h5>
+                        <h3 className="fw-bold text-primary">0</h3>
+                        <span className="text-muted"></span>
+                      </div>
+                      <div className="ms-auto">
+                        <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                          <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="col mb-3">
+                  <div className="card">
+                    <div className="d-flex p-4">
+                      <div>
+                        <h5>Total</h5>
+                        <h3 className="fw-bold text-primary">{datas.length}</h3>
+                        <span className="text-muted"></span>
+                      </div>
+                      <div className="ms-auto">
+                        <span className="d-flex align-items-center justify-content-center mx-auto rounded-5 bg-primary-light icon-circle">
+                          <i className="bi bi-briefcase-fill text-primary fs-2"></i>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
-            );
-          })*/}
-        </div>
-      </div>
+            </div>
+          </>
+        ))}
 
       <div className="card p-4 mt-3">
         {viewType === "liste" && (
@@ -326,16 +316,21 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
                     aria-describedby="basic-addon1"
                   />
                 </div>
-                <button
-                  className="btn btn-primary"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    setViewType("form");
-                    formik.resetForm();
-                  }}
-                >
-                  Ajouter
-                </button>
+                {user.profile === "ADMIN" ||
+                  (user.profile === "SUPER_ADMIN" && (
+                    <>
+                      <button
+                        className="btn btn-primary"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          setViewType("form");
+                          formik.resetForm();
+                        }}
+                      >
+                        Ajouter
+                      </button>
+                    </>
+                  ))}
               </div>
               <table className="table table-hover table-striped1  border-top">
                 <thead className="bg-primary">
@@ -373,22 +368,41 @@ const OffreDashboardComponent = ({ type = "EMPLOI", title }) => {
                             >
                               <i className="bi bi-eye-fill"></i>
                             </button>
-                            <button
-                              className="btn btn-outline-danger rounded-2 mx-1"
-                              //data-bs-toggle="modal"
-                              //data-bs-target="#form"
-                              onClick={(e) => setEditData(e, data)}
-                            >
-                              <i className="bi bi-pencil-square"></i>
-                            </button>
-                            <button
-                              className="btn btn-danger rounded-2 ms-1"
-                              data-bs-toggle="modal"
-                              data-bs-target="#delete"
-                              onClick={(e) => setSelectedData(e, data)}
-                            >
-                              <i className="bi bi-trash-fill"></i>
-                            </button>
+                            {user.profile === "ADMIN" ||
+                            user.profile === "SUPER_ADMIN" ? (
+                              <>
+                                <button
+                                  className="btn btn-outline-danger rounded-2 mx-1"
+                                  //data-bs-toggle="modal"
+                                  //data-bs-target="#form"
+                                  onClick={(e) => setEditData(e, data)}
+                                >
+                                  <i className="bi bi-pencil-square"></i>
+                                </button>
+                                <button
+                                  className="btn btn-danger rounded-2 ms-1"
+                                  data-bs-toggle="modal"
+                                  data-bs-target="#delete"
+                                  onClick={(e) => setSelectedData(e, data)}
+                                >
+                                  <i className="bi bi-trash-fill"></i>
+                                </button>
+                              </>
+                            ) : (
+                              <>
+                                <button
+                                  className="btn btn-outline-primary rounded-2 ms-1"
+                                  onClick={(e) =>
+                                    goTo(
+                                      e,
+                                      "/offres/" + data.slug + "/candidature"
+                                    )
+                                  }
+                                >
+                                  Postuler
+                                </button>
+                              </>
+                            )}
                           </div>
                         </td>
                       </tr>
