@@ -447,8 +447,8 @@ const Dashboard = () => {
               <Route path="/ressources" element={<RessourceDashboard />} />
               <Route path="/paiements" element={<PaiementDashboard />} />
               <Route path="/candidatures" element={<CandidatureDashboard />} />
-              {user.profile === "POSTULANT" ||
-                (user.profile === "RECRUTEUR" && (
+              {
+                ((user.profile === "POSTULANT" || user.profile === "RECRUTEUR") && (
                   <>
                     <Route
                       path="/dashboard/accueil"
