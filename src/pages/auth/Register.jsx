@@ -53,7 +53,21 @@ const Register = () => {
       .email("Adresse e-mail invalide")
       .required("Ce champ est obligatoire. Veuillez le remplir pour continuer"),
     password: Yup.string()
-      .min(8, "Le mot de passe doit contenir 8 caractères ou moins")
+      .min(8, "Le mot de passe doit contenir au moins 8 caractères")
+      .matches(
+        /[a-z]/,
+        "Le mot de passe doit contenir au moins une lettre minuscule"
+      )
+      .matches(
+        /[A-Z]/,
+        "Le mot de passe doit contenir au moins une lettre majuscule"
+      )
+      .matches(/[0-9]/, "Le mot de passe doit contenir au moins un chiffre")
+      .matches(
+        /[!@#$%^&*]/,
+        "Le mot de passe doit contenir au moins un caractère spécial"
+      )
+
       .required("Ce champ est obligatoire. Veuillez le remplir pour continuer"),
   });
 
@@ -87,8 +101,8 @@ const Register = () => {
       error: {
         render({ data }) {
           console.log(data);
-          if(data?.response?.data?.message){
-            return data?.response?.data?.message
+          if (data?.response?.data?.message) {
+            return data?.response?.data?.message;
           }
           return data?.response?.data?.errors
             ? data?.response?.data?.errors
@@ -125,7 +139,7 @@ const Register = () => {
                   nos services. Veuillez fournir des informations exactes pour
                   faciliter votre inscription
                 </div>
-                
+
                 <InputField
                   type="text"
                   label="Nom"

@@ -247,7 +247,7 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
                 <th scope="col">Genre</th>
                 <th scope="col">Compte</th>
                 <th scope="col" className="text-center">
-                  Header
+                  Action
                 </th>
               </tr>
             </thead>
@@ -319,19 +319,59 @@ const UserDashboardComponent = ({ type = "POSTULANT", title }) => {
         id={"form"}
         title={
           formik.values["slug"]
-            ? "Modification de l'emploi"
-            : "Ajout d'un emploi"
+            ? "Modification du compte d'un administrateur"
+            : "Ajout d'un administrateur"
         }
         callback={formik.handleSubmit}
         closeRef={closeFormRef}
       >
         <InputField
           type="text"
-          name="label"
-          label={"Intitulé de l'emploi"}
+          name="nom"
+          label={"Nom"}
           formik={formik}
-          placeholder="Entrez l'intitulé de l'emploi"
+          placeholder="Nom"
         />
+        <InputField
+          type="text"
+          name="prenom"
+          label={"Prénom"}
+          formik={formik}
+          placeholder="Prénom"
+        />
+        <InputField
+          type="select"
+          name="genre"
+          label={"Genre"}
+          formik={formik}
+          placeholder="Sélectionnez un genre"
+          options={[
+            {slug:"homme", label:"Homme"},
+            {slug:"femme", label:"Femme"},
+          ]}
+        />
+        <InputField
+          type="text"
+          name="email"
+          label={"Email"}
+          formik={formik}
+          placeholder="Email"
+        />
+        <InputField
+          type="text"
+          name="telephone"
+          label={"Téléphone"}
+          formik={formik}
+          placeholder="Téléphone"
+        />
+        <InputField
+          type="text"
+          name="password"
+          label={"Mot de passe"}
+          formik={formik}
+          placeholder="Mot de passe"
+        />
+        
         <InputField
           type="textaera"
           name="description"
